@@ -3,7 +3,7 @@
     <el-aside class=" bottom" width="300px" height="100%">
       <div>
         <el-button>默认按钮</el-button>
-        <el-button type="primary">主要按钮</el-button>
+        <el-button class="Hello" type="primary" @click="printHtml">主要按钮</el-button>
         <el-button type="success">成功按钮</el-button>
         <el-button type="info">信息按钮</el-button>
         <el-button type="warning">警告按钮</el-button>
@@ -201,7 +201,10 @@ export default {
     };
   },
   methods: {
-
+    printHtml(){
+      alert()
+      Console.log($(this).html());
+    },
     getdata(evt) {
       console.log(evt.draggedContext.filterKey)
       //这里evt.draggedContext后续的内容根据具体的定义变量而定

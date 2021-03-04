@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 // 引入自定义指令
 import './js/directives.js';
+import $ from 'jquery'
+import UUID from "vue-uuid";
+
+Vue.use(UUID);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

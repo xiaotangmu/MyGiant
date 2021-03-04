@@ -3,9 +3,9 @@
     <el-aside class=" bottom" width="300px" height="100%">
       <div>
         <el-button @click="toMain">ToMain</el-button>
-        <el-button @click="toTest">ToTest</el-button>
-        <el-button type="success">成功按钮</el-button>
-        <el-button type="info">信息按钮</el-button>
+        <el-button @click="toIndex">ToIndex</el-button>
+        <el-button type="success" @click="toTest">ToTest</el-button>
+        <el-button type="info" @click="toContent">ToContent</el-button>
         <el-button type="warning">警告按钮</el-button>
         <el-button type="danger">危险按钮</el-button>
       </div>
@@ -60,8 +60,14 @@ export default {
     toMain: function(){
       this.$router.push({ path: '/main' })
     },
-    toTest: function(){
+    toIndex: function(){
       this.$router.push({ path: '/index' })
+    },
+    toTest: function(){
+      this.$router.push({ path: '/test' })
+    },
+    toContent: function(){
+      this.$router.push({ path: '/content' })
     }
   }
 }
