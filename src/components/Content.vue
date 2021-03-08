@@ -1,7 +1,7 @@
 <template>
 
   <div class="row">
-    <div class="giant-modal" style="display: none">
+    <div class="giant-modal" >
       <el-button class="modal-element">默认按钮</el-button>
       <el-button class="modal-element" type="primary">主要按钮</el-button>
       <el-button class="modal-element" type="success">成功按钮</el-button>
@@ -46,32 +46,67 @@
           :total="1000">
         </el-pagination>
       </div>
-    </div>
-      <div class="itxst">
-        <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
-        <div class="col">
-          <draggable :value="arr3" @end="end" :options="{group:{name: 'itxst',pull:'clone'},sort: true}"  animation="300">
-            <transition-group>
-              <dl style="display: inline-block" v-for="item in arr3" :key="item.id" v-html="item.name"></dl>
-              <!--              <div :class="item.id==1?'item forbid':'item'" >-->
-              <!--              </div>-->
+      <el-row :gutter="12">
+        <el-col :span="8">
+          <el-card shadow="always">
+            总是显示
+          </el-card>
+        </el-col>
+      </el-row>
 
-            </transition-group>
-            <!--            <el-button type="success" @click="test($event)">Hello</el-button>-->
-            <!--            <el-button type="success" @click="test($event)">Hello2</el-button>-->
-          </draggable>
-        </div>
-        <div class="col">
-          <draggable v-model="arr4"  @end="end" group="itxst"  animation="300">
-            <transition-group>
-              <!--              <div :class="item.id==12?'item2 forbid':'item2'" v-for="item in arr4" :key="item.id">-->
-              <!--                <dl v-html="item.name"></dl>-->
-              <!--              </div>-->
-              <dl style="display: inline-block" v-for="item in arr4" :key="item.id" v-html="item.name"></dl>
-            </transition-group>
-          </draggable>
-        </div>
+      <el-card shadow="hover">
+        鼠标悬浮时显示
+      </el-card>
+      <el-card shadow="never">
+        从不显示
+      </el-card>
+    </div>
+    <!-- 面板 -->
+    <div class="itxst">
+      <div style="display: inline-block;width: 30%;">
+        <el-card class="box-card main_box">
+          <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
+          <div class="">
+            <draggable style="height: 100%" :value="arr3" @end="end" :options="{group:{name: 'itxst',pull:'clone'},sort: true}" animation="300">
+              <transition-group>
+                <dl class="inline_box" style="display: inline-block" v-for="item in arr3" :key="item.id" v-html="item.name">
+                </dl>
+                <!--              <div :class="item.id==1?'item forbid':'item'" >-->
+                <!--              </div>-->
+
+              </transition-group>
+              <!--            <el-button type="success" @click="test($event)">Hello</el-button>-->
+              <!--            <el-button type="success" @click="test($event)">Hello2</el-button>-->
+            </draggable>
+          </div>
+        </el-card>
       </div>
+      <div style="display: inline-block;width: 50%;">
+        <el-card class="box-card main_box">
+          <div class="">
+            <draggable  v-model="arr4" @end="end" group="itxst" animation="300">
+
+              <transition-group style="height: 800px">
+                <div><hr></div>
+                <!--              <div :class="item.id==12?'item2 forbid':'item2'" v-for="item in arr4" :key="item.id">-->
+                <!--                <dl v-html="item.name"></dl>-->
+                <!--              </div>-->
+                <dl class="inline_box" style="display: inline-block" v-for="item in arr4" :key="item.id" v-html="item.name"></dl>
+              </transition-group>
+            </draggable>
+          </div>
+        </el-card>
+      </div>
+      <div style="display: inline-block;width: 19.3%;">
+        <el-card class="box-card main_box">
+          <div v-for="o in 4" :key="o" class="text item">
+            {{'列表内容 ' + o }}
+          </div>
+        </el-card>
+      </div>
+
+
+    </div>
   </div>
 </template>
 
@@ -94,8 +129,6 @@
           // { name: "<button data-v-dc87507c=\"\" type=\"button\" class=\"el-button el-button--sucess\" id=\"hello4\"><!----><!----><span>Hello4</span></button>", id: 4 }
         ],
         arr4: [
-          { name: "<p data-v-dc87507c=\"\"  id=\"hello6\"><!----><!----><span>Hello6</span></p>", id: 6 },
-          { name: "<button data-v-dc87507c=\"\" type=\"button\" class=\"el-button el-button--sucess\" id=\"hello5\"><!----><!----><span>Hello5</span></button>", id: 5 },
         ],
         moveId:-1
       };
@@ -147,7 +180,13 @@
   [v-cloak] {
     display: none;
   }
-
+  .main_box{
+    height: 800px;
+    overflow: auto;
+  }
+  .inline_box{
+    margin-left: 10px;
+  }
   .draggable {
   }
   .list-complete-item {

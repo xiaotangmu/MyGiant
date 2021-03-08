@@ -6,6 +6,8 @@
         <el-button @click="toIndex">ToIndex</el-button>
         <el-button type="success" @click="toTest">ToTest</el-button>
         <el-button type="info" @click="toContent">ToContent</el-button>
+        <el-button type="info" @click="toContent2">ToContent2</el-button>
+        <el-button type="info" @click="toContent3">ToContent3</el-button>
         <el-button type="warning">警告按钮</el-button>
         <el-button type="danger">危险按钮</el-button>
       </div>
@@ -68,6 +70,12 @@ export default {
     },
     toContent: function(){
       this.$router.push({ path: '/content' })
+    },
+    toContent2: function(){
+      this.$router.push({ path: '/content2' })
+    },
+    toContent3: function(){
+      this.$router.push({ path: '/content3' })
     }
   }
 }
