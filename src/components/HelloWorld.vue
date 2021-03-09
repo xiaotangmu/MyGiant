@@ -8,6 +8,7 @@
         <el-button type="info" @click="toContent">ToContent</el-button>
         <el-button type="info" @click="toContent2">ToContent2</el-button>
         <el-button type="info" @click="toContent3">ToContent3</el-button>
+        <el-button type="info" @click="toContent4">ToContent4</el-button>
         <el-button type="warning">警告按钮</el-button>
         <el-button type="danger">危险按钮</el-button>
       </div>
@@ -76,6 +77,9 @@ export default {
     },
     toContent3: function(){
       this.$router.push({ path: '/content3' })
+    },
+    toContent4: function(){
+      this.$router.push({ path: '/content4' })
     }
   }
 }

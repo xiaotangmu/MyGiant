@@ -6,9 +6,36 @@
 <!--        <div class="div1 divCopy">-->
 <!--          drag-->
 <!--        </div>-->
-<!--        <el-button class="div1 divCopy">默认按钮</el-button>-->
-        面积过小拖动时会脱离范围，造成效果失败
-        使用element ui 加载数据过多，拖动跟踪缓慢，效果不行
+        <el-button class="div1 divCopy">默认按钮</el-button>
+<!--        面积过小拖动时会脱离范围，造成效果失败-->
+<!--        使用element ui 加载数据过多，拖动跟踪缓慢，效果不行-->
+        <div id="modal" style="display: none">
+          <el-button>默认按钮</el-button>
+          <el-button class="Hello" type="primary" @click="printHtml">主要按钮</el-button>
+          <el-button type="success">成功按钮</el-button>
+          <el-button type="info">信息按钮</el-button>
+          <el-button type="warning">警告按钮</el-button>
+          <el-button type="danger">危险按钮</el-button>
+          <el-time-picker
+            v-model="value1"
+            :picker-options="{
+      selectableRange: '18:30:00 - 20:30:00'
+    }"
+            placeholder="任意时间点">
+          </el-time-picker>
+          <el-time-picker
+            arrow-control
+            v-model="value2"
+            :picker-options="{
+      selectableRange: '18:30:00 - 20:30:00'
+    }"
+            placeholder="任意时间点">
+          </el-time-picker>
+          <el-transfer v-model="value" :data="data"></el-transfer>
+        </div>
+        <div v-for="(item, index) in list" >
+          <dl v-html="item.name" class="drag div1 divCopy"  :style="'display:' + item.display"></dl>
+        </div>
         <button class="div1 divCopy">Hello</button>
       </el-card>
     </div>
@@ -37,11 +64,16 @@
         cloneHtml: '',
         ss: 'shanghai',
         oldoffset: '',
-        temp: 0
+        temp: 0,
+        list: [
+        ],
       }
     },
     mounted () {
       let that = this;
+      $("#modal").children().each(function(i){
+        that.list.push({ name: $(this).prop('outerHTML'), display: $(this).css('display')})
+      });
       //1.鼠标按下时复制目标元素
       $(document).on("mousedown",".div1",function(event){
         that.dragging = true;
@@ -77,7 +109,7 @@
               opacity: '0.8',
               position: 'fixed',
               left: that.oldoffset.left + movePageX,
-              top: that.oldoffset.top - 10 + movePageY,
+              top: that.oldoffset.top - 10 + movePageY - (event.pageY - event.currentTarget.screentY),
             });
             let targetBox = $("#box");
             let targetBoxOffset = targetBox.offset();

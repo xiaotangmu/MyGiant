@@ -68,8 +68,9 @@
           <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
           <div class="">
             <draggable style="height: 100%" :value="arr3" @end="end" :options="{group:{name: 'itxst',pull:'clone'},sort: true}" animation="300">
+
               <transition-group>
-                <dl class="inline_box" style="display: inline-block" v-for="item in arr3" :key="item.id" v-html="item.name">
+                <dl class="inline_box" :style="'display:' + item.display" v-for="item in arr3" :key="item.id" v-html="item.name">
                 </dl>
                 <!--              <div :class="item.id==1?'item forbid':'item'" >-->
                 <!--              </div>-->
@@ -84,8 +85,9 @@
       <div style="display: inline-block;width: 50%;">
         <el-card class="box-card main_box">
           <div class="">
-            <draggable  v-model="arr4" @end="end" group="itxst" animation="300">
 
+            <draggable  v-model="arr4" @end="end" group="itxst" animation="300">
+              <div><hr></div>
               <transition-group style="height: 800px">
                 <div><hr></div>
                 <!--              <div :class="item.id==12?'item2 forbid':'item2'" v-for="item in arr4" :key="item.id">-->
@@ -141,7 +143,7 @@
         //item 就是当日按循环到的对象
         //index是循环的索引，从0开始
         console.log($(this).prop('outerHTML'))
-        that.arr3.push({name: $(this).prop('outerHTML'), id:that.$uuid.v1()});
+        that.arr3.push({name: $(this).prop('outerHTML'), id:that.$uuid.v1(), display: $(this).css('display')});
       })
       console.log(that.arr3)
 
