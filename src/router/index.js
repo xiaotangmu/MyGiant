@@ -7,6 +7,7 @@ import Content from '@/components/Content'
 import Content2 from '@/components/Content2'
 import Content3 from '@/components/Content3'
 import Content4 from '@/components/Content4'
+import Content5 from '@/components/Content5'
 import Index from '@/components/Index'
 import Test from '@/components/Test'
 import 'element-ui/lib/theme-chalk/index.css';
@@ -53,6 +54,11 @@ export default new Router({
       path: '/content4',
       name: 'Content4',
       component: Content4
+    },
+    {
+      path: '/content5',
+      name: 'Content5',
+      component: Content5
     }
   ]
 })

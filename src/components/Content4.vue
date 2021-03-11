@@ -1,40 +1,73 @@
 <template>
   <div>
     <div id="component-modal" style="display: none">
-      <div style="display: inline-block" >hello</div>
-      <div style="display: inline-block" class="test-box"></div>
-      <el-button style="display: inline-block" >Hello</el-button>
-      <el-select style="display: inline-block" v-model="value" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-switch
-        style="display: inline-block"
-        v-model="value1"
-        active-text="按月付费"
-        inactive-text="按年付费">
-      </el-switch>
-      <el-switch
-        style="display: inline-block"
-        v-model="value1"
-        active-text="按月付费"
-        inactive-text="按年付费">
-      </el-switch>
-      <div class="block">
-        <span class="demonstration">自定义初始值</span>
-        <el-slider v-model="value2"></el-slider>
-      </div>
+      <div drag-type="div">换行---</div>
+      <div drag-type="span" style="width: 100px;display: inline-block">空格：100px</div>
+      <el-button drag-type="button-default" style="display: inline-block">默认按钮</el-button>
+      <el-button type="primary" drag-type="button-primary" style="display: inline-block">主要按钮</el-button>
+      <el-button type="success" drag-type="button-success" style="display: inline-block">成功按钮</el-button>
+      <el-button type="info" drag-type="button-info" style="display: inline-block">信息按钮</el-button>
+      <el-button type="warning" drag-type="button-warning" style="display: inline-block">警告按钮</el-button>
+      <el-button type="danger" drag-type="button-danger" style="display: inline-block">危险按钮</el-button>
+      <el-button icon="el-icon-search" circle style="display: inline-block" drag-type="button-default-circle"></el-button>
+      <el-button type="primary" icon="el-icon-edit" circle style="display: inline-block" drag-type="button-primary-circle"></el-button>
+      <el-button type="success" icon="el-icon-check" circle style="display: inline-block" drag-type="button-success-circle"></el-button>
+      <el-button type="info" icon="el-icon-message" circle style="display: inline-block" drag-type="button-info-circle"></el-button>
+      <el-button type="warning" icon="el-icon-star-off" circle style="display: inline-block" drag-type="button-warning-circle"></el-button>
+      <el-button type="danger" icon="el-icon-delete" circle style="display: inline-block" drag-type="button-danger-circle"></el-button>
+      <el-table
+        drag-type="table-base"
+        :data="tableData"
+        style="width: 100%">
+        <el-table-column
+          prop="date"
+          label="日期"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="地址">
+        </el-table-column>
+      </el-table>
+      <!--      <div style="display: inline-block" >hello</div>-->
+<!--      <div style="display: inline-block" class="test-box"></div>-->
+<!--      <el-button style="display: inline-block" >Hello</el-button>-->
+<!--      <el-select style="display: inline-block" v-model="value" placeholder="请选择">-->
+<!--        <el-option-->
+<!--          v-for="item in options"-->
+<!--          :key="item.value"-->
+<!--          :label="item.label"-->
+<!--          :value="item.value">-->
+<!--        </el-option>-->
+<!--      </el-select>-->
+<!--      <el-switch-->
+<!--        style="display: inline-block"-->
+<!--        v-model="value1"-->
+<!--        active-text="按月付费"-->
+<!--        inactive-text="按年付费">-->
+<!--      </el-switch>-->
+<!--      <el-switch-->
+<!--        style="display: inline-block"-->
+<!--        v-model="value1"-->
+<!--        active-text="按月付费"-->
+<!--        inactive-text="按年付费">-->
+<!--      </el-switch>-->
+<!--      <div class="block">-->
+<!--        <span class="demonstration">自定义初始值</span>-->
+<!--        <el-slider v-model="value2"></el-slider>-->
+<!--      </div>-->
     </div>
     <div style="display: inline-block;width: 30%;">
       <el-card class="box-card main_box" id="box1">
         <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
-        <div draggable="true" class="drag-item" type="dragRectangle">
-          <i class="tag tag-rectangle"></i>
-        </div>
+<!--        <div draggable="true" class="drag-item" type="dragRectangle">-->
+<!--          <i class="tag tag-rectangle"></i>-->
+<!--        </div>-->
 <!--        <div v-for="(item, index) in componentList" draggable="true" class="drag-item" type="dragCircle" v-html="item.name" :style="'dispaly:' + item.display">-->
 <!--        </div>-->
 
@@ -46,9 +79,19 @@
     </div>
     <div style="display: inline-block;width: 19.3%;">
       <el-card class="box-card main_box">
-        <div v-for="o in 4" :key="o" class="text item">
-          {{'列表内容 ' + o }}
-        </div>
+        <el-button @click="getCodeElement">生成字符代码</el-button>
+        <div></div>
+        <el-tooltip content="向前移" placement="bottom" effect="light">
+          <el-button class="toUp" type="success" icon="el-icon-back" circle></el-button>
+        </el-tooltip>
+        <el-tooltip content="向后移" placement="bottom" effect="light">
+          <el-button class="toDown" type="warning" icon="el-icon-right" circle></el-button>
+        </el-tooltip>
+        <el-tooltip content="移除" placement="bottom" effect="light">
+          <el-button class="toRemove" type="danger" icon="el-icon-delete" circle></el-button>
+        </el-tooltip>
+        <div></div>
+
       </el-card>
     </div>
 
@@ -60,6 +103,23 @@
     name: 'Content4',
     data(){
       return{
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }],
         componentList: [],
         options: [{
           value: '选项1',
@@ -80,20 +140,61 @@
         value: '',
         value1: true,
         value2: 50,
+        codeElement: [],
       }
     },
-
+    methods: {
+      /*
+      * 获取生成代码元素
+      * */
+      getCodeElement(){
+        let that = this;
+        that.codeElement = [];
+        let str = '';
+        $('.panel-element').each(function(i){
+          let type = $(this).children(0).attr('drag-type');
+          console.log(type);
+          let temp = that.$store.state.componentElem.filter(item => item.type === type);
+          console.log(temp)
+          str += temp[0].content + '\n';
+          that.codeElement.push(temp[0]);
+        })
+        console.log(str);
+        console.log(that.codeElement);
+        this.generateCode();
+      },
+      /*
+      ** 生成代码
+       */
+      generateCode(){
+        let result = '<template>\n<div>\n';
+        let temData = '';
+        let cacheList = [];
+        this.codeElement.forEach(function(item, index){
+          result += '\t' + item.content + '\n';
+          if(item.data !== ''){
+            let temList = cacheList.filter(i => i.name === item.data.name);
+            if(temList.length === 0){ // 判断是否去重
+              cacheList.push(item.data);
+              temData += '\n\t\t' + item.data.name + ': ' + item.data.extend + ',';
+            }
+          }
+        });
+        result += '</div>\n</template>\n\n<script>\nexport default {' +
+          '\n\tprops: [],\n\tcomponents: {},\n\tdata() {\n\t\treturn {';
+        result += temData;
+        result += '\n\t}\n},\nmounted() {},\nmethods: {';
+        result += '\n},\n}\n<\/script>\n\n<style scoped>\n</style>';
+        console.log(result)
+        return result;
+      }
+    },
     mounted () {
       let that = this;
       $('#component-modal').children().each(function(i){
         var $div = $('<div draggable="true" class="drag-item" type="dragRectangle">\n' +
         '        </div>').append($(this)).css('display', $(this).css('display'));
-        console.log(this.style.display);
-        console.log($(this).prop('style').display);
-        console.log($(this).prop('style').nodeName);
-        console.log($(this));
         $("#box1").append($div);
-        // that.componentList.push({ name: $(this).prop('outerHTML'), display: $(this).css('display')})
       });
       var cArea = $('#ele');  // 最外层容器
       var drag = $('.drag');  // 拖拽区域
@@ -248,8 +349,8 @@
        * @param elem  容器
        */
       function getElemLowestCoordinate(elem) {
-        var elemX = $(elem).offset().left + $(elem).width(); // 相对于element.offsetParent节点的左边界偏移像素值
-        var elemY = $(elem).offset().top + $(elem).height();  // 相对于element.offsetParent节点的上边界偏移像素值
+        var elemX = $(elem).offset().left + $(elem).innerWidth(); // 相对于element.offsetParent节点的左边界偏移像素值
+        var elemY = $(elem).offset().top + $(elem).innerHeight();  // 相对于element.offsetParent节点的上边界偏移像素值
         return { X: elemX, Y: elemY };
       };
       /**
@@ -326,26 +427,14 @@
         let tempCoor = '';  // 缓存元素坐标
         let tempObj = ''; // 缓存元素
         $(className).each(function(i){
-          let coorElem = getElemCenterCoordinate(this); // 获取元素坐标
-          if(coor.Y <= coorElem.Y){
-            if(tempCoor !== ''){
-              if(tempCoor.Y > coorElem.Y ){  // 不同行
-                tempCoor = coorElem;
-                tempObj = $(this);
-              }else if(tempCoor.Y === coorElem.Y ){
-                // let coorLowest = getElemLowestCoordinate(this);
-                if(tempCoor.X < coorElem.X && coorElem.X <= coor.X){// 同一行
-                  tempCoor = coorElem;
-                  tempObj = $(this);
-                }
-              }
-            }else{
-              // tempCoor = getElemLowestCoordinate(this);
-              tempObj = $(this);
-            }
+          let coorElem = getElemCoordinate(this); // 获取元素坐标
+          let lowestCoorElem = getElemLowestCoordinate(this); // 获取元素坐标
+          if(coor.Y >= coorElem.Y && coor.Y <= lowestCoorElem.Y &&
+            coor.X >= coorElem.X && coor.X <= lowestCoorElem.X){
+            tempObj = $(this);
+            return tempObj;
           }
         });
-        $(tempObj).css('border-right', '2px solid red')
         return tempObj;
       }
       /**
@@ -372,7 +461,6 @@
           // 判断是否要插入到
           let $insertObj = '';
           $insertObj = getClosestElem('.panel-element', getMouseCoordinate());
-          console.log($($insertObj).prop('outerHTML'));
           $($dragEle).addClass('panel-element');  // 添加标记
           if($insertObj === ''){ // 不用移位
             $container.append($dragEle);
@@ -392,8 +480,53 @@
           // dragControlSizeForAll(eleDrag);
         }
       }
-
-
+      let $chooseElem = '';
+      // 选择要操作的组件
+      $(document).on("click",".panel-element",function (e) {
+        //屏蔽事件冒泡
+        e.stopPropagation();
+        hideChoose();
+        $(this).css('border', '1px solid red');
+        $chooseElem = $(this);
+      })
+      // 取消选择
+      function hideChoose(){
+        $('.panel-element').each(function(i){
+          $(this).css('border', 'none')
+        })
+        $chooseElem = '';
+      }
+      // 上移
+      $(document).on("click",".toUp",function (e) {
+        //屏蔽事件冒泡
+        e.stopPropagation();
+        if($chooseElem === '')
+          return false;
+        // 判断是否还有前面兄弟
+        let $before = $chooseElem.prev('.panel-element');
+        if($before.length === 0)
+          return false;
+        $($before).before($chooseElem)
+      });
+      // 下移
+      $(document).on("click",".toDown",function (e) {
+        //屏蔽事件冒泡
+        e.stopPropagation();
+        if($chooseElem === '')
+          return false;
+        let $after = $chooseElem.next('.panel-element');
+        if($after.length === 0)
+          return false;
+        $($after).after($chooseElem)
+      });
+      // 移除
+      $(document).on("click",".toRemove",function (e) {
+        //屏蔽事件冒泡
+        e.stopPropagation();
+        if($chooseElem === '')
+          return false;
+        $chooseElem.remove()
+      });
 // 根据类型生成对应组件, 列表元素在面板中mouseup 时触发
 //       function getHtmlForType(eleDregType) {
 //         var directionBtn;

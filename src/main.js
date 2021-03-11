@@ -7,7 +7,7 @@ import router from './router'
 import './js/directives.js';
 import $ from 'jquery'
 import UUID from "vue-uuid";
-
+import store from './store';
 Vue.use(UUID);
 Vue.config.productionTip = false
 
@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
