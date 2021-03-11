@@ -508,7 +508,7 @@
           return false;
         $($before).before($chooseElem)
       });
-      // 下移位置
+      // 下移
       $(document).on("click",".toDown",function (e) {
         //屏蔽事件冒泡
         e.stopPropagation();
