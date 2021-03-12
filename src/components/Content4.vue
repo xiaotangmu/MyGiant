@@ -1,8 +1,11 @@
 <template>
   <div>
     <div id="component-modal" style="display: none">
+      <!--  换行    -->
       <div drag-type="div">换行---</div>
+      <!--   占位空格   -->
       <div drag-type="span" style="width: 100px;display: inline-block">空格：100px</div>
+      <!--   button   -->
       <el-button drag-type="button-default" style="display: inline-block">默认按钮</el-button>
       <el-button type="primary" drag-type="button-primary" style="display: inline-block">主要按钮</el-button>
       <el-button type="success" drag-type="button-success" style="display: inline-block">成功按钮</el-button>
@@ -15,6 +18,39 @@
       <el-button type="info" icon="el-icon-message" circle style="display: inline-block" drag-type="button-info-circle"></el-button>
       <el-button type="warning" icon="el-icon-star-off" circle style="display: inline-block" drag-type="button-warning-circle"></el-button>
       <el-button type="danger" icon="el-icon-delete" circle style="display: inline-block" drag-type="button-danger-circle"></el-button>
+      <!--   input   -->
+      <el-input v-model="input" placeholder="请输入内容" style="display: inline-block" drag-type="input-default"></el-input>
+      <el-input
+        style="display: inline-block" drag-type="input-clearable"
+        placeholder="请输入内容"
+        v-model="input"
+        clearable>
+      </el-input>
+      <el-input placeholder="请输入密码" v-model="input" show-password style="display: inline-block" drag-type="input-password"></el-input>
+      <el-input
+        style="display: inline-block" drag-type="input-attr-date"
+        placeholder="请选择日期"
+        suffix-icon="el-icon-date"
+        v-model="input1">
+      </el-input>
+      <el-input
+        style="display: inline-block" drag-type="input-attr-search"
+        placeholder="请输入内容"
+        prefix-icon="el-icon-search"
+        v-model="input2">
+      </el-input>
+      <el-input
+        style="display: inline-block" drag-type="input-slot-date"
+        placeholder="请选择日期"
+        v-model="input3">
+        <i slot="suffix" class="el-input__icon el-icon-date"></i>
+      </el-input>
+      <el-input
+        style="display: inline-block" drag-type="input-slot-search"
+        placeholder="请输入内容"
+        v-model="input4">
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+      </el-input>
       <el-table
         drag-type="table-base"
         :data="tableData"
@@ -79,19 +115,54 @@
     </div>
     <div style="display: inline-block;width: 19.3%;">
       <el-card class="box-card main_box">
-        <el-button @click="getCodeElement">生成字符代码</el-button>
-        <div></div>
-        <el-tooltip content="向前移" placement="bottom" effect="light">
-          <el-button class="toUp" type="success" icon="el-icon-back" circle></el-button>
-        </el-tooltip>
-        <el-tooltip content="向后移" placement="bottom" effect="light">
-          <el-button class="toDown" type="warning" icon="el-icon-right" circle></el-button>
-        </el-tooltip>
-        <el-tooltip content="移除" placement="bottom" effect="light">
-          <el-button class="toRemove" type="danger" icon="el-icon-delete" circle></el-button>
-        </el-tooltip>
-        <div></div>
-
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-form-item">
+              <el-button @click="getCodeElement">生成字符代码</el-button>
+            </div>
+          </div>
+        </div>
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="layui-form-item">
+              <el-tooltip content="向前移" placement="bottom" effect="light">
+                <el-button class="toUp" type="success" icon="el-icon-back" circle></el-button>
+              </el-tooltip>
+              <el-tooltip content="向后移" placement="bottom" effect="light">
+                <el-button class="toDown" type="warning" icon="el-icon-right" circle></el-button>
+              </el-tooltip>
+              <el-tooltip content="移除" placement="bottom" effect="light">
+                <el-button class="toRemove" type="danger" icon="el-icon-delete" circle></el-button>
+              </el-tooltip>
+            </div>
+          </div>
+        </div>
+        <!--   占位空格     -->
+        <div class="operate" drag-type="span">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">宽度(px)</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input drag-type-span" value="100">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--   按钮面板     -->
+        <div class="operate" drag-type="button">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">点击事件</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input drag-type-span" value="100">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </el-card>
     </div>
 
@@ -103,6 +174,11 @@
     name: 'Content4',
     data(){
       return{
+        input1: '',
+        input2: '',
+        input3: '',
+        input4: '',
+        input: '',
         tableData: [{
           date: '2016-05-02',
           name: '王小虎',
@@ -141,6 +217,10 @@
         value1: true,
         value2: 50,
         codeElement: [],
+        codeElementData: [
+          // 内部数据格式
+          // { id: '', type: '', style: '', data: '', attr: '', methods: {}, content: '' }
+        ] // 保存生成代码元素相关数据
       }
     },
     methods: {
@@ -153,9 +233,10 @@
         let str = '';
         $('.panel-element').each(function(i){
           let type = $(this).children(0).attr('drag-type');
-          console.log(type);
+          if(type === undefined){ // el-input 这些特殊
+            type = $(this).children(0).children(0).attr('drag-type');
+          }
           let temp = that.$store.state.componentElem.filter(item => item.type === type);
-          console.log(temp)
           str += temp[0].content + '\n';
           that.codeElement.push(temp[0]);
         })
@@ -171,7 +252,15 @@
         let temData = '';
         let cacheList = [];
         this.codeElement.forEach(function(item, index){
-          result += '\t' + item.content + '\n';
+          let style = ''; // 记录style 数据
+          if(item.style !== ''){
+            style = 'style: "';
+            item.style.forEach(function(i, index){
+              style += i.name + ": " + i.data + '; ';
+            })
+            style += '"';
+          }
+          result += '\t' + item.content1 + style + item.content2 + '\n';
           if(item.data !== ''){
             let temList = cacheList.filter(i => i.name === item.data.name);
             if(temList.length === 0){ // 判断是否去重
@@ -224,21 +313,6 @@
 
 //设置层级关系
       var zindex = 999;
-
-
-      // function initFun() {
-      //   $('body').on('mousedown', '.drag', startDrag);
-      //   //元素点击
-      //   $('body').on('click', '.drag', dragControlSize);
-      //   //body下点击   （空白区）
-      //   $('body').on('click', '#ele', remoreAllControlSize);
-      //   $('body').on('dblclick', '.drag', changeImg);
-      //   $('body').on('change', '#fontColor', setFontColor);
-      //   $('body').on('change', '#bgColor', setBgColor);
-      //   $('body').on('click', '.fontDialogClose', fontDragDialog);
-      //   $('body').on('click', '.fontDialogTrue', trueTextDragDialog);
-      //   $('body').on('keyup', '.textarea', textareaKeyUp);
-      // }
 
       $(document).keydown(function (e) {
         if(isDialog){
@@ -446,39 +520,30 @@
       }
 // 列表元素在面板中mouseup 时触发
       function setHtml(eleDrag, type, index) {
-        if (type === 0) {
-          //元素类型   有矩形，圆角矩形，线条，圆，图片
-          // var eleDregType = $(eleDrag).attr('type');
-          // var $dragEle = $('<div>');
-          // var directionBtn = getHtmlForType(eleDregType);
-          var $dragEle = $(eleDrag).clone();
-          $($dragEle).removeClass('drag-item');
-          $($dragEle).attr('draggable', 'false'); // 设置不可拖动
-          // $(".drag").each(function () {
-          //   dragControlSizeForAll(this);
-          // });
-          // $dragEle.css('z-index', zindex++).addClass(eleDregType).addClass("drag").attr('data-type', 'drag').attr('type', eleDregType).append(directionBtn);
-          // 判断是否要插入到
-          let $insertObj = '';
-          $insertObj = getClosestElem('.panel-element', getMouseCoordinate());
-          $($dragEle).addClass('panel-element');  // 添加标记
-          if($insertObj === ''){ // 不用移位
-            $container.append($dragEle);
-          }else{
-            $insertObj.before($dragEle);
-            // $insertObj.css('border-right', 'none')
-          }
-          // setDragElePosition(eleDrag, $dragEle, type)
-          // 文字创建时自动获取焦点
-          // $dragEle.find('.textarea').focus();
-          // currentEle = $dragEle;
-        } else {
-          // var $dragEle = eleDrag.clone(true);
-          // clickEle[index] = $dragEle;
-          // $container.append($dragEle);
-          // setDragElePosition(eleDrag, $dragEle, type);
-          // dragControlSizeForAll(eleDrag);
+        var $dragEle = $(eleDrag).clone();
+        $($dragEle).removeClass('drag-item');
+        $($dragEle).attr('draggable', 'false'); // 设置不可拖动
+        // 判断是否要插入到
+        let $insertObj = '';
+        $insertObj = getClosestElem('.panel-element', getMouseCoordinate());
+        $($dragEle).addClass('panel-element');  // 添加标记
+        $($dragEle).attr('id', that.$uuid.v1());
+        if($insertObj === ''){ // 不用移位
+          $container.append($dragEle);
+        }else{
+          $insertObj.before($dragEle);
         }
+        // 缓存数据
+        cachePageData($dragEle);
+      }
+      // 缓存生成代码数据
+      function cachePageData($elem){
+        let data = { id: '', type: '', style: '', data: '', attr: '', methods: {}, content1: '' , content2: ''};
+        data.id = $elem.attr('id');
+        data.type = getDragType($elem);
+        let tempList = that.$store.state.componentElem.filter(item => item.type === data.type)
+        data.style = tempList[0].style;
+        that.codeElementData.push(data);
       }
       let $chooseElem = '';
       // 选择要操作的组件
@@ -488,6 +553,8 @@
         hideChoose();
         $(this).css('border', '1px solid red');
         $chooseElem = $(this);
+        // 显示操作面板
+        dispalyOperatePanel();
       })
       // 取消选择
       function hideChoose(){
@@ -495,6 +562,49 @@
           $(this).css('border', 'none')
         })
         $chooseElem = '';
+      }
+      // 通过选择的元素显示对应操作面板
+      function dispalyOperatePanel(){
+        if($chooseElem === undefined || $chooseElem === '' || $chooseElem === null)
+          return false;
+        let type = getDragType($chooseElem);
+        operateHideOrShow(type);
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      function operateHideOrShow(type){
+        $('.operate').each(function(i){
+          let dragType = $(this).attr('drag-type');
+          console.log(dragType)
+          console.log(type)
+          console.log(dragType.substr(0, 7))
+          if(dragType === type){
+            $(this).show()
+          }else if(dragType.length > 6 && dragType.substring(0, 7) === 'button'){ // button
+            $(this).show()
+          }else{
+            $(this).hide()
+          }
+        });
       }
       // 上移
       $(document).on("click",".toUp",function (e) {
@@ -504,6 +614,7 @@
           return false;
         // 判断是否还有前面兄弟
         let $before = $chooseElem.prev('.panel-element');
+        console.log($chooseElem)
         if($before.length === 0)
           return false;
         $($before).before($chooseElem)
@@ -527,219 +638,17 @@
           return false;
         $chooseElem.remove()
       });
-// 根据类型生成对应组件, 列表元素在面板中mouseup 时触发
-//       function getHtmlForType(eleDregType) {
-//         var directionBtn;
-//         // if (eleDregType === 'dragHorizontalLine') {
-//         //   directionBtn = $('.cacheEleHorizontalLine').html();
-//         // } else if (eleDregType === 'dragVerticalLine') {
-//         //   directionBtn = $('.cacheEleVerticalLine').html();
-//         // } else if (eleDregType === 'dragWords') {
-//         //   directionBtn = $('.cacheEleWords').html();
-//         // } else if (eleDregType === 'dragNoteText') {
-//         //   directionBtn = $('.cacheEleNoteText').html();
-//         // } else if (eleDregType === 'dragImg') {
-//         //   directionBtn = $('.cacheEleImg').html();
-//         // } else {
-//         //   directionBtn = $('.cacheEle').html();
-//         // }
-//         directionBtn = $('.test-box').html();
-//         return directionBtn;
-//       }
-
-
-      // function createData() {
-      //   return {
-      //     objtype: '', objcode: '', left: '', top: '', width: '', height: '', linewidth: '',
-      //     text: '', autosize: '', alignment: '', fontname: '', fontsize: '', fontbold: '',
-      //     fontitalic: '', fontcolor: '', flag: '', format: '', stretch: '', tag: '', allpwPrint: '',
-      //     bgcolor: '', bordercolor: '', zindex: ''
-      //   };
-      // }
-
-      // function getDate() {
-      //   var dataList = [];
-      //   var domList = $("#ele").children();
-      //   domList.each(function () {
-      //     var data = createData();
-      //     var $this = $(this);
-      //     //第一个class为元素类型
-      //     data.objtype = $this.attr("class").split(' ')[0];
-      //     data.left = $this.position().left;
-      //     data.top = $this.position().top;
-      //     data.width = $this.width();
-      //     data.height = $this.height();
-      //     data.linewidth = $this.css('border-width');
-      //     if ($this.find('textarea').length > 0) {
-      //       data.text = $this.find('textarea').val();
-      //     }
-      //     data.alignment = $this.css('text-align');
-      //     data.fontname = $this.css('font-family');
-      //     data.fontsize = $this.css('font-size');
-      //     data.fontbold = $this.css('font-weight');
-      //     data.fontitalic = $this.css('font-style');
-      //     data.fontcolor = $this.css('color');
-      //     data.bgcolor = $this.css('background-color');
-      //     data.zindex = $this.css('z-index');
-      //     dataList.push(data);
-      //   });
-      //   console.log(dataList);
-      // }
-
-// // 加载时触发, 连续触发
-//       function unitConversion() {
-//         /**
-//          * 获取DPI
-//          * @returns {Array}
-//          */
-//         this.conversion_getDPI = function () {
-//           var arrDPI = new Array;
-//           if (window.screen.deviceXDPI) {
-//             arrDPI[0] = window.screen.deviceXDPI;
-//             arrDPI[1] = window.screen.deviceYDPI;
-//           } else {
-//             var tmpNode = document.createElement("div");
-//             tmpNode.style.cssText = "width:1in;height:1in;position:absolute;left:0px;top:0px;z-index:99;visibility:hidden";
-//             document.body.appendChild(tmpNode);
-//             arrDPI[0] = parseInt(tmpNode.offsetWidth);
-//             arrDPI[1] = parseInt(tmpNode.offsetHeight);
-//             tmpNode.parentNode.removeChild(tmpNode);
-//           }
-//           return arrDPI;
-//         };
-//         /**
-//          * px转换为mm
-//          * @param value
-//          * @param index
-//          * @returns {number}
-//          * 1英寸(in)=25.4毫米(mm)
-//          */
-//         this.pxConversionMm = function (value, index) {
-//           var inch = value / this.conversion_getDPI()[index];
-//           var c_value = inch * 25.4;
-//           return c_value;
-//         };
-//         /**
-//          * mm转换为px
-//          * @param value
-//          * @param index
-//          * @returns {number}
-//          */
-//         this.mmConversionPx = function (value, index) {
-//           var inch = value / 25.4;
-//           var c_value = inch * this.conversion_getDPI()[index];
-//           return c_value;
-//         }
-//       }
-// 加载时触发, 只触发一次
-//       function rulerHorizontalItem() {
-//         var $rulerHorizontal = $(".rulerHorizontal");
-//         $rulerHorizontal.append(' <div class="rulerHorizontalFive"><div class="rulerHorizontalSize">0</div></div>')
-//         var areaW = cArea.width();
-//         $rulerHorizontal.css('width', cArea.width() + rulerSize + 2);
-//         var i = 1;
-//         var sizeNum = 1;
-//         while (areaW > 0) {
-//           var $rulerHorizontalItem = $('<div>');
-//           if (i != 0 && i % 5 === 0) {
-//             $rulerHorizontalItem.addClass('rulerHorizontalFive');
-//             $rulerHorizontalItem.append($('<div>').addClass('rulerHorizontalSize').html(sizeNum));
-//             sizeNum++;
-//           } else {
-//             $rulerHorizontalItem.addClass('rulerHorizontalOne');
-//           }
-//           $rulerHorizontalItem.css('padding-left', new unitConversion().mmConversionPx(2, 0) - 1);
-//
-//           $rulerHorizontal.append($rulerHorizontalItem);
-//           i++;
-//           areaW -= (new unitConversion().mmConversionPx(2, 0));
-//         }
-//       }
-// 加载时触发，触发两次
-//       function rulerVerticalItem() {
-//         var $rulerVertical = $(".rulerVertical");
-//         var areaH = cArea.height();
-//         $rulerVertical.css('height', cArea.height());
-//         $rulerVertical.append(' <div class="rulerVerticalFive" style="border: 0;"><div class="rulerVerticalSize">0</div></div>')
-//         var j = 1;
-//         var sizeNum = 1;
-//         while (areaH > 0) {
-//           var $rulerVerticalItem = $('<div>');
-//           if (j != 0 && j % 5 === 0) {
-//             $rulerVerticalItem.addClass('rulerVerticalFive');
-//             $rulerVerticalItem.append($('<div>').addClass('rulerVerticalSize').html(sizeNum));
-//             sizeNum++;
-//           } else {
-//             $rulerVerticalItem.addClass('rulerVerticalOne');
-//           }
-//           $rulerVerticalItem.css('padding-top', new unitConversion().mmConversionPx(2, 1) - 1);
-//           $rulerVertical.append($rulerVerticalItem);
-//           j++;
-//           areaH -= (new unitConversion().mmConversionPx(2, 1));
-//         }
-//       }
-
-// //标尺, 加载时触发，触发两次
-//       function rulerInit() {
-//         rulerHorizontalItem();
-//         rulerVerticalItem();
-//       }
-
-// //设置画布大小, 加载时触发，触发两次
-//       function setAreaWH() {
-//         var w = new unitConversion().mmConversionPx(areaWidthIn * 25.4, 0);
-//         var h = new unitConversion().mmConversionPx(areaHeightIn * 25.4, 1);
-//         $("#ele").css('width', w);
-//         $("#ele").css('height', h);
-//         $('.topUtils').css('width', w);
-//       }
-// 加载时触发，两次
-//       function initData() {
-//         cAreaH = cArea.height(); //容器高度
-//         cAreaW = cArea.width();  // 容器宽度
-//       }
-// // 加载时触发，两次
-//       function setAreaWHAegin() {
-//         var w = $('.rulerHorizontal').width();
-//         var h = $('.rulerVertical').height();
-//         $("#ele").css('width', w - 29).css('height', h + 1).css('top', rulerSize).css('left', rulerSize + leftUtilsSize);
-//         $('.topUtils').css('width', w - 28);
-//       }
-// 加载时触发，两次
-//       function init() {
-//         // setAreaWH();
-//         // rulerInit();
-//         // setAreaWHAegin();
-//         initData();
-//         initFun()
-//       }
-
-
-// 加载时触发，一次
-//       function fontDragDialog() {
-//         var isHidden = $('.font_dialog_wrapper').is(':hidden');
-//         if (isHidden) {
-//           isDialog = true;
-//           $('.font_dialog_wrapper').css('display', 'block');
-//           $('#fontfamily').val($(currentEle).css('font-family'))
-//           $('#fontsize').val($(currentEle).css('font-size'))
-//         } else {
-//           isDialog = false;
-//           $('.font_dialog_wrapper').css('display', 'none');
-//         }
-//       }
-// 加载时触发，一次
-//       function trueTextDragDialog() {
-//         var fontfamily = $("#fontfamily").val();
-//         var fontsize = $('#fontsize').val();
-//         for (var i = 0; i < clickEle.length; i++) {
-//           var clickEleItem = clickEle[i];
-//           $(clickEleItem).children().css('font-family', fontfamily).css('font-size',fontsize);
-//           $(clickEleItem).css('font-family', fontfamily).css('font-size',fontsize);
-//           textareaAuto(clickEleItem);
-//         }
-//         fontDragDialog();
-//       }
+      // 监控占位空格改变宽度
+      $(document).on("change", '.drag-type-span', function(e){
+        let width = this.value + 'px';
+        $chooseElem.css('width', width)
+        $chooseElem.children(0).text('空格：' + width);
+        // 改变绑定缓存数据
+        let index1 = that.codeElementData.findIndex(item => item.id === $chooseElem.attr('id'));
+        let index2 = that.codeElementData[index1].style.findIndex(item => item.name === 'width');
+        that.codeElementData[index1].style[index2].data = width;
+        console.log(that.codeElementData)
+      })
 // 加载时触发，一次
       function textareaAuto(e) {
         if($(e).hasClass('dragWords')){
@@ -747,12 +656,22 @@
         }
       }
 
-      // init();
+      // 获取drag div子元素的dragType
+      function getDragType($elem){
+        let type = $elem.children(0).attr('drag-type');
+        if(type === undefined || type === '' || type === null){
+          type = $elem.children(0).children(0).attr('drag-type');
+        }
+        return type;
+      }
     }
   }
 </script>
 
 <style scoped>
+  .operate{
+    display: none;
+  }
   .panel-element{
     vertical-align: bottom;
   }

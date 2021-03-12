@@ -6,6 +6,7 @@ import router from './router'
 // 引入自定义指令
 import './js/directives.js';
 import $ from 'jquery'
+import 'bootstrap'
 import UUID from "vue-uuid";
 import store from './store';
 Vue.use(UUID);
