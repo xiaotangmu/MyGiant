@@ -155,14 +155,63 @@
           <div class="layui-card">
             <div class="layui-card-body">
               <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Text</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-button" >
+                </div>
+              </div>
+              <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">点击事件</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input drag-type-span" value="100">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="事件名" autocomplete="off" class="layui-input drag-type-button">
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!--    input    -->
+        <div class="operate" drag-type="input">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">提示</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-input" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">绑定数据</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-input" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    table    -->
+        <div class="operate" drag-type="table">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">表名</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-table" >
+                </div>
+              </div>
+              <el-divider content-position="left">column</el-divider>
+              <div class="layui-form-item">
+                <div class="layui-form-label" style="text-align: left">
+                  <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-add"><i class="layui-icon"></i></button>
+                  <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-remove"><i class="layui-icon"></i></button>
+                </div>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-table" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <el-button class="operate-submit">保存</el-button>
       </el-card>
     </div>
 
@@ -219,7 +268,8 @@
         codeElement: [],
         codeElementData: [
           // 内部数据格式
-          // { id: '', type: '', style: '', data: '', attr: '', methods: {}, content: '' }
+          // { id: '', type: '', style: [ { name: '', data: '' }], data: [ { name: '', data: '' } ], attr: [ { name: '', data: '' } ],
+          // methods: [ { name: '', data: '' } ], content1: '', content2:'', content3: '', text: '' }
         ] // 保存生成代码元素相关数据
       }
     },
@@ -230,19 +280,49 @@
       getCodeElement(){
         let that = this;
         that.codeElement = [];
-        let str = '';
         $('.panel-element').each(function(i){
           let type = $(this).children(0).attr('drag-type');
           if(type === undefined){ // el-input 这些特殊
             type = $(this).children(0).children(0).attr('drag-type');
           }
-          let temp = that.$store.state.componentElem.filter(item => item.type === type);
-          str += temp[0].content + '\n';
-          that.codeElement.push(temp[0]);
+          let temp1 = that.$store.state.componentElem.filter(item => item.type === type);
+          let data = temp1[0];
+          let index = that.codeElementData.findIndex(item => item.id === $(this).attr('id'));
+          that.codeElementData[index].content1 = data.content1;
+          that.codeElementData[index].content2 = data.content2;
+          that.codeElementData[index].content3 = data.content3;
         })
-        console.log(str);
         console.log(that.codeElement);
         this.generateCode();
+      },
+      generateStyle(item){
+        let style = ''; // 记录style 数据
+        if(item.style !== undefined && item.style !== '' && item.style !== null && item.style.length > 0){
+          style = 'style: "';
+          item.style.forEach(function(i, index){
+            style += i.name + ": " + i.data + '; ';
+          })
+          style += '"';
+        }
+        return style;
+      },
+      generateAttr(item){
+        let attr = ''; // 记录 attr 数据
+        if(item.attr !== undefined && item.attr !== '' && item.attr !== null && item.attr.length > 0){
+          item.attr.forEach(function(i, index){
+            attr += i.name + ': "' + i.data + '" ';
+          })
+        }
+        return attr;
+      },
+      generateMothods(item){
+        let methods = ''; // 记录 methods 数据
+        if(item.methods !== undefined && item.methods !== '' && item.methods !== null && item.methods.length > 0){
+          item.methods.forEach(function(i, index){
+            methods += i.name + ': "' + i.data + '" ';
+          })
+        }
+        return methods;
       },
       /*
       ** 生成代码
@@ -251,16 +331,12 @@
         let result = '<template>\n<div>\n';
         let temData = '';
         let cacheList = [];
-        this.codeElement.forEach(function(item, index){
-          let style = ''; // 记录style 数据
-          if(item.style !== ''){
-            style = 'style: "';
-            item.style.forEach(function(i, index){
-              style += i.name + ": " + i.data + '; ';
-            })
-            style += '"';
-          }
-          result += '\t' + item.content1 + style + item.content2 + '\n';
+        this.codeElementData.forEach(function(item, index){
+          let style = this.generateStyle(item);
+          let attr = this.generateAttr(item);
+          let methods = this.generateMothods(item);
+          let text = item.text;
+          result += '\t' + item.content1 + style + attr + methods + item.content2 + text + item.content3 + '\n';
           if(item.data !== ''){
             let temList = cacheList.filter(i => i.name === item.data.name);
             if(temList.length === 0){ // 判断是否去重
@@ -299,20 +375,9 @@
       var clickEle = [];  //缓存当前选中元素
       var mousePosition, mouseStartX, mouseStartY, dragLeft, dragTop, dragMaxH, dragMaxW;  // 定义按下鼠标产生的变量
 
-//画布大小   宽8.5英寸   高5.5英寸
-      var areaWidthIn = 8.5;
-      var areaHeightIn = 5.5;
-
       var movePx = 3;  //全局移动点
-
       var isCopy = false;
-
-      var isLockScreen = true;
-
       var isDialog = false;
-
-//设置层级关系
-      var zindex = 999;
 
       $(document).keydown(function (e) {
         if(isDialog){
@@ -538,7 +603,8 @@
       }
       // 缓存生成代码数据
       function cachePageData($elem){
-        let data = { id: '', type: '', style: '', data: '', attr: '', methods: {}, content1: '' , content2: ''};
+        let data = { id: '', type: [], style: '', data: [], attr: [],
+          methods: [], content1: '' , content2: '', text: '', content3: ''};
         data.id = $elem.attr('id');
         data.type = getDragType($elem);
         let tempList = that.$store.state.componentElem.filter(item => item.type === data.type)
@@ -546,6 +612,7 @@
         that.codeElementData.push(data);
       }
       let $chooseElem = '';
+      let $chooseElemPanel = '';
       // 选择要操作的组件
       $(document).on("click",".panel-element",function (e) {
         //屏蔽事件冒泡
@@ -570,42 +637,37 @@
         let type = getDragType($chooseElem);
         operateHideOrShow(type);
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      // 显示操作面板
       function operateHideOrShow(type){
+        $('.operate-submit').show();
         $('.operate').each(function(i){
           let dragType = $(this).attr('drag-type');
-          console.log(dragType)
-          console.log(type)
-          console.log(dragType.substr(0, 7))
           if(dragType === type){
+            $chooseElemPanel = $(this)
             $(this).show()
-          }else if(dragType.length > 6 && dragType.substring(0, 7) === 'button'){ // button
+          }else if(type.length >= 6 && type.substr(0, 6).trim() === dragType){ // button
+            $chooseElemPanel = $(this)
+            $(this).show()
+          }else if(type.length >= 5 && type.substr(0, 5).trim() === dragType){  // input | table
+            $chooseElemPanel = $(this)
             $(this).show()
           }else{
             $(this).hide()
           }
         });
       }
+      // table 操作面板 column 添加
+      $(document).on('click', '.drag-column-add', function(e){
+        let item = $(this).parent().parent().clone();
+        item.children(1).children(0).val('');
+        $(this).parent().parent().parent().append(item);
+      });
+      // table 操作面板 column 删除
+      $(document).on('click', '.drag-column-remove', function(e){
+        if($('.drag-column-remove').length > 1){
+          $(this).parent().parent().remove();
+        }
+      });
       // 上移
       $(document).on("click",".toUp",function (e) {
         //屏蔽事件冒泡
@@ -638,17 +700,128 @@
           return false;
         $chooseElem.remove()
       });
+      // 点击保存操作面板
+      $(document).on('click', '.operate-submit', function(e){
+        let type = $chooseElemPanel.attr('drag-type');
+        if(type === 'span'){  // 监控占位空格改变宽度
+          dragTypeSpan();
+        }else if(type === 'button'){  // 监控按钮绑定数据
+          dragTypeButton();
+        }else if(type === 'input'){ // 监控input绑定数据
+          dragTypeInput();
+        }else if(type === 'table'){ // 监控 table 绑定数据
+          dragTypeTable();
+        }
+      });
+
+      // 绑定attr 数据
+      function bingAttr(index1, name, value){
+        let index2 = that.codeElementData[index1].attr.findIndex(item => item.name === name);
+        if(index2 === -1){
+          that.codeElementData[index1].attr.push({ name: name, data: value })
+        }else{
+          that.codeElementData[index1].attr[index2].data = value;
+        }
+      }
+      // 绑定 data 数据
+      function bingData(index1, name, value){
+        let index2 = that.codeElementData[index1].data.findIndex(item => item.name === name);
+        if(index2 === -1){
+          that.codeElementData[index1].data.push({ name: name, data: value })
+        }else{
+          that.codeElementData[index1].data[index2].data = value;
+        }
+      }
+      // 绑定 methods 数据
+      function bingMethods(index1, name, value){
+        let index2 = that.codeElementData[index1].methods.findIndex(item => item.name === name);
+        if(index2 === -1){
+          that.codeElementData[index1].methods.push({ name: name, data: value })
+        }else{
+          that.codeElementData[index1].methods[index2].data = value;
+        }
+      }
+      // 绑定 style 数据
+      function bingStyle(index1, name, value){
+        let index2 = that.codeElementData[index1].data.findIndex(item => item.name === name);
+        if(index2 === -1){
+          that.codeElementData[index1].style.push({ name: name, data: value })
+        }else{
+          that.codeElementData[index1].style[index2].data = value;
+        }
+      }
       // 监控占位空格改变宽度
-      $(document).on("change", '.drag-type-span', function(e){
-        let width = this.value + 'px';
+      function dragTypeSpan(){
+        let width = $('.drag-type-span').val() + 'px';
         $chooseElem.css('width', width)
         $chooseElem.children(0).text('空格：' + width);
         // 改变绑定缓存数据
         let index1 = that.codeElementData.findIndex(item => item.id === $chooseElem.attr('id'));
-        let index2 = that.codeElementData[index1].style.findIndex(item => item.name === 'width');
-        that.codeElementData[index1].style[index2].data = width;
+        bingStyle(index1, 'width', width);
+        that.$message.success('保存成功');
+      }
+      // 监控按钮绑定数据
+      function dragTypeButton(e){
+        $('.drag-type-button').each(function(i){
+          // 改变绑定缓存数据
+          let index1 = that.codeElementData.findIndex(item => item.id === $chooseElem.attr('id'));
+          let text = $(this).parent().prev().text();
+          let value = $(this).val();
+          if(text === 'Text'){  // 按钮文本
+            that.codeElementData[index1].text = $(this).val();
+          }else if(text === '点击事件'){
+            bingMethods(index1, '@click', value)
+          }
+        });
         console.log(that.codeElementData)
-      })
+        that.$message.success('保存成功');
+      }
+// 监控input绑定数据
+      function dragTypeInput(e){
+        // 改变绑定缓存数据
+        let index1 = that.codeElementData.findIndex(item => item.id === $chooseElem.attr('id'));
+        $('.drag-type-input').each(function(i){
+          let text = $(this).parent().prev().text();
+          let value = $(this).val();
+          if(text === '提示'){  // 表名
+            bingAttr(index1, 'placeholder', value)
+          }else if(text === '绑定数据'){
+            bingAttr(index1, 'v-model', value)
+          }
+        });
+        that.$message.success('保存成功');
+      }
+      // 监控 table 绑定数据
+      function dragTypeTable(e){
+        // 保存前把列表清空
+        let index1 = that.codeElementData.findIndex(item => item.id === $chooseElem.attr('id'));
+        let index = that.codeElementData[index1].data.findIndex(item => item.name === 'column');
+        if(index === -1){
+          that.codeElementData[index1].data.push({ name: 'column', data: [] })
+        }else{
+          that.codeElementData[index1].data[index].data = [];
+        }
+        $('.drag-type-table').each(function(i){
+          // 改变绑定缓存数据
+          let text = $(this).parent().prev().text();
+          let value = $(this).val();
+          if(value.trim() === ''){
+            return true;
+          }
+          if(text === '表名'){  // 表名
+            bingData(index1, 'table', value)
+          }else{
+            let index2 = that.codeElementData[index1].data.findIndex(item => item.name === 'column');
+            if(index2 === -1){
+              that.codeElementData[index1].data.push({ name: 'column', data: value })
+            }else{
+              that.codeElementData[index1].data[index2].data.push(value);
+            }
+          }
+        });
+        console.log(that.codeElementData)
+        that.$message.success('保存成功');
+      }
 // 加载时触发，一次
       function textareaAuto(e) {
         if($(e).hasClass('dragWords')){
@@ -669,6 +842,10 @@
 </script>
 
 <style scoped>
+  .operate-submit{
+    display: none;
+    margin: 10px 0 10px 20px ;
+  }
   .operate{
     display: none;
   }
