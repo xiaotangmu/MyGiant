@@ -205,7 +205,9 @@
                   <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-remove"><i class="layui-icon"></i></button>
                 </div>
                 <div class="layui-input-block">
-                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-table" >
+                  <input type="text" name="title" required  lay-verify="required" placeholder="中文" autocomplete="off" class="layui-input drag-type-table1 panelTableInput" >
+                  <input type="text" name="title" required  lay-verify="required" placeholder="English" autocomplete="off" class="layui-input drag-type-table2 panelTableInput" >
+                  <input type="text" name="title" placeholder="宽度" autocomplete="off" class="layui-input drag-type-table3 panelTableInput">
                 </div>
               </div>
             </div>
@@ -265,12 +267,12 @@
         value: '',
         value1: true,
         value2: 50,
-        codeElement: [],
         codeElementData: [
           // 内部数据格式
           // { id: '', type: '', style: [ { name: '', data: '' }], data: [ { name: '', data: '' } ], attr: [ { name: '', data: '' } ],
           // methods: [ { name: '', data: '' } ], content1: '', content2:'', content3: '', text: '' }
-        ] // 保存生成代码元素相关数据
+        ], // 保存生成代码元素相关数据
+        methodsCache: '',
       }
     },
     methods: {
@@ -279,7 +281,6 @@
       * */
       getCodeElement(){
         let that = this;
-        that.codeElement = [];
         $('.panel-element').each(function(i){
           let type = $(this).children(0).attr('drag-type');
           if(type === undefined){ // el-input 这些特殊
@@ -292,56 +293,114 @@
           that.codeElementData[index].content2 = data.content2;
           that.codeElementData[index].content3 = data.content3;
         })
-        console.log(that.codeElement);
+        console.log(that.codeElementData);
         this.generateCode();
       },
       generateStyle(item){
         let style = ''; // 记录style 数据
         if(item.style !== undefined && item.style !== '' && item.style !== null && item.style.length > 0){
-          style = 'style: "';
+          style = 'style="';
           item.style.forEach(function(i, index){
             style += i.name + ": " + i.data + '; ';
           })
           style += '"';
         }
+        console.log('style: ' + style)
         return style;
       },
       generateAttr(item){
         let attr = ''; // 记录 attr 数据
         if(item.attr !== undefined && item.attr !== '' && item.attr !== null && item.attr.length > 0){
           item.attr.forEach(function(i, index){
-            attr += i.name + ': "' + i.data + '" ';
+            attr += i.name + '="' + i.data + '" ';
           })
         }
+        console.log('attr: ' + attr)
         return attr;
       },
       generateMothods(item){
         let methods = ''; // 记录 methods 数据
+        let that = this;
         if(item.methods !== undefined && item.methods !== '' && item.methods !== null && item.methods.length > 0){
           item.methods.forEach(function(i, index){
-            methods += i.name + ': "' + i.data + '" ';
+            methods += i.name + '="' + i.data + '" ';
+            that.methodsCache = '\n' + i.data + '(){},'
           })
         }
+        console.log('methods: ' + methods)
         return methods;
+      },
+      // :data="tableData"
+      generateTableColumn(tableData, item){
+        console.log('tableData')
+        console.log(tableData)
+        console.log(item)
+        let index1 = item.data.findIndex(i => i.name === 'table');
+        let data = ' :data="' + item.data[index1].data + '">\n ';
+        // 拼接column
+        let index2 = item.data.findIndex(i => i.name === 'column');
+        let columns = index2 !== -1?item.data[index2].data : '';
+        //   <el-table-column
+        // prop="date"
+        // label="日期"
+        // width="180">
+        //   </el-table-column>
+        if(columns !== '' && columns.length > 0){
+          columns.forEach(function(i2, index){
+            let width = '';
+            if(i2.width !== undefined && i2.width !== null && i2.width.trim() !== ''){
+              width = 'width: "' + i2.width + '"\n';
+            }
+            data += tableData.content21 + ' prop="' + i2.english + '"\n ' +
+              'label="' + i2.chinese + '"\n ' + width + tableData.content22;
+          })
+        }
+        console.log('table: ' + data)
+        return data;
       },
       /*
       ** 生成代码
        */
       generateCode(){
+        let that = this;
         let result = '<template>\n<div>\n';
         let temData = '';
         let cacheList = [];
-        this.codeElementData.forEach(function(item, index){
-          let style = this.generateStyle(item);
-          let attr = this.generateAttr(item);
-          let methods = this.generateMothods(item);
+        // 缓存table
+        let temp1 = this.$store.state.componentElem.filter(item => item.type.substr(0, 5) === 'table');
+        let data = temp1[0];
+        that.codeElementData.forEach(function(item, index){
+          let style = that.generateStyle(item);
+          let attr = that.generateAttr(item);
+          let methods = that.generateMothods(item);
           let text = item.text;
-          result += '\t' + item.content1 + style + attr + methods + item.content2 + text + item.content3 + '\n';
-          if(item.data !== ''){
-            let temList = cacheList.filter(i => i.name === item.data.name);
-            if(temList.length === 0){ // 判断是否去重
-              cacheList.push(item.data);
-              temData += '\n\t\t' + item.data.name + ': ' + item.data.extend + ',';
+          if(item.type.length > 5 && item.type.substr(0, 5) === 'table'){
+            result += '\t' + item.content1 + style + attr + methods +
+              that.generateTableColumn(data, item) + item.content2 + text + item.content3 + '\n';
+            // data
+            let table = item.data.filter(i => i.name === 'table');
+            console.log(table)
+            if(table.length > 0){
+              let temList = cacheList.filter(i => i.name === table[0].data);
+              if(temList.length === 0){ // 判断是否去重
+                cacheList.push({ name: table[0].data, data: [] });
+                temData += '\n\t\t' + table[0].data + ': [],';
+              }
+            }
+          }else{
+            result += '\t' + item.content1 + style + attr + methods + item.content2 + text + item.content3 + '\n';
+            if(item.type.length > 5 && item.type.substr(0, 5) === 'input'){ // input
+              let index1 = item.attr.findIndex(i => i.name === 'v-model')
+              if(index1 !== -1){
+                temData += '\n\t\t' + item.attr[index1].data + ': "", '
+              }
+            }
+            if(item.data !== '' && item.data !== [] && item.data !== undefined && item.data.length > 0){
+              let temList = cacheList.filter(i => i.name === item.data.name);
+              if(temList.length === 0){ // 判断是否去重
+                cacheList.push(item.data);
+                temData += '\n\t\t' + item.data.name + ': ' + item.data.data + ', ';
+              }
             }
           }
         });
@@ -349,6 +408,7 @@
           '\n\tprops: [],\n\tcomponents: {},\n\tdata() {\n\t\treturn {';
         result += temData;
         result += '\n\t}\n},\nmounted() {},\nmethods: {';
+        result += that.methodsCache;
         result += '\n},\n}\n<\/script>\n\n<style scoped>\n</style>';
         console.log(result)
         return result;
@@ -577,7 +637,7 @@
         return tempObj;
       }
       /**
-       * 移除指定元素下所有元素尺寸控制器， 实现点击一个元素，其他元素控制器隐藏
+       * 移除指定元素下所有元素尺寸控制器，实现点击一个元素，其他元素控制器隐藏
        * @param e
        */
       function dragControlSizeForAll(e) {
@@ -810,13 +870,22 @@
           }
           if(text === '表名'){  // 表名
             bingData(index1, 'table', value)
+          }
+        });
+        $('.drag-type-table1').each(function(i){
+          // 改变绑定缓存数据
+          let chineseName = $(this).val();
+          let englishName = $(this).next().val();
+          let width = $(this).next().next().val();
+          if(chineseName.trim() === ''){
+            return true;
+          }
+          let value = { chinese: chineseName, english: englishName, width: width };
+          let index2 = that.codeElementData[index1].data.findIndex(item => item.name === 'column');
+          if(index2 === -1){
+            that.codeElementData[index1].data.push({ name: 'column', data: [ value ] })
           }else{
-            let index2 = that.codeElementData[index1].data.findIndex(item => item.name === 'column');
-            if(index2 === -1){
-              that.codeElementData[index1].data.push({ name: 'column', data: value })
-            }else{
-              that.codeElementData[index1].data[index2].data.push(value);
-            }
+            that.codeElementData[index1].data[index2].data.push(value);
           }
         });
         console.log(that.codeElementData)
@@ -842,6 +911,11 @@
 </script>
 
 <style scoped>
+  .panelTableInput{
+    width: 55px;
+    display: inline-block;
+    padding-left: 5px;
+  }
   .operate-submit{
     display: none;
     margin: 10px 0 10px 20px ;

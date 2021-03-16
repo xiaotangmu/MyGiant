@@ -49,24 +49,14 @@ export default {
         '  <i slot="prefix" class="el-input__icon el-icon-search"></i>\n', content3: '</el-input>', style: '', type: 'input-slot-search', display: 'inline-block', data: {
       name: 'input4', extend: ''
     }  },
-    // table
-    { content1: '<el-table\n', content2:
-        // ':data="tableData"\n' +
-        '  <el-table-column\n' +
-        'prop="date"\n' +
-        'label="日期"\n' +
-        'width="180">\n' +
-        '  </el-table-column>\n' +
-        '  <el-table-column\n' +
-        'prop="name"\n' +
-        'label="姓名"\n' +
-        'width="180">\n' +
-        '  </el-table-column>\n' +
-        '  <el-table-column\n' +
-        'prop="address"\n' +
-        'label="地址">\n' +
-        '  </el-table-column>\n' +
-        '  </el-table>', content3: '', style: [ { name: 'width', data: '100%' } ], type: 'table-base', display: 'block', data: { name: 'tableData', extend: '[{\n' +
+    // table  :data="tableData"
+    //   <el-table-column
+    // prop="date"
+    // label="日期"
+    // width="180">
+    // </el-table-column>
+    { content1: '<el-table\n ', content2: '', content21: ' <el-table-column\n', content22: '  ></el-table-column>\n',
+          content3: '</el-table>', style: [ { name: 'width', data: '100%' } ], type: 'table-base', display: 'block', data: { name: 'tableData', extend: '[{\n' +
           '            date: \'2016-05-02\',\n' +
           '            name: \'王小虎\',\n' +
           '            address: \'上海市普陀区金沙江路 1518 弄\'\n' +
