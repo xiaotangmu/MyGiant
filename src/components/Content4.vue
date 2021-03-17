@@ -1,6 +1,7 @@
 <template>
   <div>
     <div id="component-modal" style="display: none">
+
       <!--  换行    -->
       <div drag-type="div">换行---</div>
       <!--   占位空格   -->
@@ -100,6 +101,10 @@
     </div>
     <div style="display: inline-block;width: 30%;">
       <el-card class="box-card main_box" id="box1">
+        <el-container>
+          <el-aside width="100px" style="height: 100%">Aside</el-aside>
+          <el-main style="height: 100%">Main</el-main>
+        </el-container>
         <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
 <!--        <div draggable="true" class="drag-item" type="dragRectangle">-->
 <!--          <i class="tag tag-rectangle"></i>-->
@@ -911,6 +916,19 @@
 </script>
 
 <style scoped>
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
+  }
   .panelTableInput{
     width: 55px;
     display: inline-block;
@@ -929,6 +947,7 @@
   .main_box{
     height: 985px;
     overflow: auto;
+    padding: 0;
   }
   /** {*/
   /*  padding: 0;*/
