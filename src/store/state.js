@@ -7,17 +7,35 @@ export default {
     // 占位inline block
     { content1: '<div ', content2: '>', content3: '</div>', style: [ { name: 'width', data: '100px' }, { name: 'display', data: 'inline-block' } ], type: 'span', display: 'inline-block', data: '' }, // 用作换行
     // button
+    //
     { content1: '<el-button ', content2: '>', content3: '</el-button>', style: '', type: 'button-default', display: 'inline-block', data: '' },
     { content1: '<el-button ', content2: 'type="primary">', content3: '</el-button>', style: '', type: 'button-primary', display: 'inline-block', data: '' },
     { content1: '<el-button ', content2: 'type="success">', content3: '</el-button>', style: '', type: 'button-success', display: 'inline-block', data: '' },
     { content1: '<el-button ', content2: 'type="warning">', content3: '</el-button>', style: '', type: 'button-warning', display: 'inline-block', data: '' },
     { content1: '<el-button ', content2: 'type="info">', content3: '</el-button>', style: '', type: 'button-info', display: 'inline-block', data: '' },
-    { content1: '<el-button ', content2: 'icon="el-icon-search" circle>', content3: '</el-button>', style: '', type: 'button-default-circle', display: 'inline-block', data: '' },
-    { content1: '<el-button ', content2: 'type="primary" icon="el-icon-edit" circle>', content3: '</el-button>', style: '', type: 'button-primary-circle', display: 'inline-block', data: '' },
-    { content1: '<el-button ', content2: 'type="success" icon="el-icon-check" circle>', content3: '</el-button>', style: '', type: 'button-success-circle', display: 'inline-block', data: '' },
-    { content1: '<el-button ', content2: 'type="info" icon="el-icon-message" circle>', content3: '</el-button>', style: '', type: 'button-info-circle', display: 'inline-block', data: '' },
-    { content1: '<el-button ', content2: 'type="warning" icon="el-icon-star-off" circle>', content3: '</el-button>', style: '', type: 'button-warning-circle', display: 'inline-block', data: '' },
-    { content1: '<el-button ', content2: 'type="danger" icon="el-icon-delete" circle>', content3: '</el-button>', style: '', type: 'button-danger-circle', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="danger">', content3: '</el-button>', style: '', type: 'button-danger', display: 'inline-block', data: '' },
+    //plain
+    { content1: '<el-button ', content2: 'plain>', content3: '</el-button>', style: '', type: 'button-plain-default', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="primary" plain>', content3: '</el-button>', style: '', type: 'button-plain-primary', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="success" plain>', content3: '</el-button>', style: '', type: 'button-plain-success', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="warning" plain>', content3: '</el-button>', style: '', type: 'button-plain-warning', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="info" plain>', content3: '</el-button>', style: '', type: 'button-plain-info', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="danger" plain>', content3: '</el-button>', style: '', type: 'button-plain-danger', display: 'inline-block', data: '' },
+    // circle
+    { content1: '<el-button ', content2: 'icon="el-icon-search" circle>', content3: '</el-button>', style: '', type: 'button-circle-default', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="primary" icon="el-icon-edit" circle>', content3: '</el-button>', style: '', type: 'button-circle-primary', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="success" icon="el-icon-check" circle>', content3: '</el-button>', style: '', type: 'button-circle-success', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="info" icon="el-icon-message" circle>', content3: '</el-button>', style: '', type: 'button-circle-info', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="warning" icon="el-icon-star-off" circle>', content3: '</el-button>', style: '', type: 'button-circle-warning', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="danger" icon="el-icon-delete" circle>', content3: '</el-button>', style: '', type: 'button-circle-danger', display: 'inline-block', data: '' },
+    // round
+    { content1: '<el-button ', content2: 'round>', content3: '</el-button>', style: '', type: 'button-round-default', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="primary" round>', content3: '</el-button>', style: '', type: 'button-round-primary', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="success" round>', content3: '</el-button>', style: '', type: 'button-round-success', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="info" round>', content3: '</el-button>', style: '', type: 'button-round-info', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="warning" round>', content3: '</el-button>', style: '', type: 'button-round-warning', display: 'inline-block', data: '' },
+    { content1: '<el-button ', content2: 'type="danger" round>', content3: '</el-button>', style: '', type: 'button-round-danger', display: 'inline-block', data: '' },
+
     // input
     { content1: '<el-input ', content2: ' >', content3: '</el-input>', style: '', type: 'input-default', display: 'inline-block', data:
       {

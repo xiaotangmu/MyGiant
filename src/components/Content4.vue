@@ -14,11 +14,11 @@
       <el-button type="warning" drag-type="button-warning" style="display: inline-block">警告按钮</el-button>
       <el-button type="danger" drag-type="button-danger" style="display: inline-block">危险按钮</el-button>
       <el-button icon="el-icon-search" circle style="display: inline-block" drag-type="button-default-circle"></el-button>
-      <el-button type="primary" icon="el-icon-edit" circle style="display: inline-block" drag-type="button-primary-circle"></el-button>
-      <el-button type="success" icon="el-icon-check" circle style="display: inline-block" drag-type="button-success-circle"></el-button>
-      <el-button type="info" icon="el-icon-message" circle style="display: inline-block" drag-type="button-info-circle"></el-button>
-      <el-button type="warning" icon="el-icon-star-off" circle style="display: inline-block" drag-type="button-warning-circle"></el-button>
-      <el-button type="danger" icon="el-icon-delete" circle style="display: inline-block" drag-type="button-danger-circle"></el-button>
+      <el-button type="primary" icon="el-icon-edit" circle style="display: inline-block" drag-type="button-circle-primary"></el-button>
+      <el-button type="success" icon="el-icon-check" circle style="display: inline-block" drag-type="button-circle-success"></el-button>
+      <el-button type="info" icon="el-icon-message" circle style="display: inline-block" drag-type="button-circle-info"></el-button>
+      <el-button type="warning" icon="el-icon-star-off" circle style="display: inline-block" drag-type="button-circle-warning"></el-button>
+      <el-button type="danger" icon="el-icon-delete" circle style="display: inline-block" drag-type="button-circle-danger"></el-button>
       <!--   input   -->
       <el-input v-model="input" placeholder="请输入内容" style="display: inline-block" drag-type="input-default"></el-input>
       <el-input
@@ -71,40 +71,181 @@
           label="地址">
         </el-table-column>
       </el-table>
-      <!--      <div style="display: inline-block" >hello</div>-->
-<!--      <div style="display: inline-block" class="test-box"></div>-->
-<!--      <el-button style="display: inline-block" >Hello</el-button>-->
-<!--      <el-select style="display: inline-block" v-model="value" placeholder="请选择">-->
-<!--        <el-option-->
-<!--          v-for="item in options"-->
-<!--          :key="item.value"-->
-<!--          :label="item.label"-->
-<!--          :value="item.value">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
-<!--      <el-switch-->
-<!--        style="display: inline-block"-->
-<!--        v-model="value1"-->
-<!--        active-text="按月付费"-->
-<!--        inactive-text="按年付费">-->
-<!--      </el-switch>-->
-<!--      <el-switch-->
-<!--        style="display: inline-block"-->
-<!--        v-model="value1"-->
-<!--        active-text="按月付费"-->
-<!--        inactive-text="按年付费">-->
-<!--      </el-switch>-->
-<!--      <div class="block">-->
-<!--        <span class="demonstration">自定义初始值</span>-->
-<!--        <el-slider v-model="value2"></el-slider>-->
-<!--      </div>-->
     </div>
-    <div style="display: inline-block;width: 30%;">
-      <el-card class="box-card main_box" id="box1">
-        <el-container>
-          <el-aside width="100px" style="height: 100%">Aside</el-aside>
-          <el-main style="height: 100%">Main</el-main>
-        </el-container>
+    <div style="display: inline-block;width: 35%;">
+      <el-card class="box-card main_box clearfix" id="box1">
+        <div class="leftMenu">
+          <ul>
+            <li class="left-menu-item">按钮</li>
+            <li class="left-menu-item">表单</li>
+            <li class="left-menu-item">输入框</li>
+            <li class="left-menu-item">按钮</li>
+            <li class="left-menu-item">表单</li>
+            <li class="left-menu-item">输入框</li>
+            <li class="left-menu-item">按钮</li>
+            <li class="left-menu-item">表单</li>
+            <li class="left-menu-item">输入框</li>
+          </ul>
+        </div>
+        <div class="rightComponent">
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>布局</div>
+          <div draggable="true" class="drag-item" type="dragRectangle">
+            <!--  换行    -->
+            <div drag-type="div">换行---</div>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <!--   占位空格   -->
+            <div drag-type="span" style="width: 100px;display: inline-block">空格：100px</div>
+          </div>
+
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>按钮</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <!--   button   -->
+            <el-button drag-type="button-default" style="display: inline-block">默认按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="primary" drag-type="button-primary" style="display: inline-block">主要按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="success" drag-type="button-success" style="display: inline-block">成功按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="warning" drag-type="button-warning" style="display: inline-block">警告按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="info" drag-type="button-info" style="display: inline-block">信息按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="danger" drag-type="button-danger" style="display: inline-block">危险按钮</el-button>
+          </div>
+          <!--    plain   -->
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="primary" drag-type="button-plain-primary" style="display: inline-block" plain>主要按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="success" drag-type="button-plain-success" style="display: inline-block" plain>成功按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="info" drag-type="button-plain-info" style="display: inline-block" plain>信息按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="warning" drag-type="button-plain-warning" style="display: inline-block" plain>警告按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="danger" drag-type="button-plain-danger" style="display: inline-block" plain>危险按钮</el-button>
+          </div>
+          <!--    round   -->
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button drag-type="button-round-default" style="display: inline-block" round>圆角按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="primary" drag-type="button-round-primary" style="display: inline-block" round>主要按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="success" drag-type="button-round-success" style="display: inline-block" round>成功按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="info" drag-type="button-round-info" style="display: inline-block" round>信息按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="warning" drag-type="button-round-warning" style="display: inline-block" round>警告按钮</el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="danger" drag-type="button-round-danger" style="display: inline-block" round>危险按钮</el-button>
+          </div>
+          <!--    round   -->
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button drag-type="button-circle-default" style="display: inline-block" icon="el-icon-search" circle></el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="primary" drag-type="button-circle-primary" style="display: inline-block" icon="el-icon-edit" circle></el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="success" drag-type="button-circle-success" style="display: inline-block" icon="el-icon-check" circle></el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="info" drag-type="button-circle-info" style="display: inline-block" icon="el-icon-message" circle></el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="warning" drag-type="button-circle-warning" style="display: inline-block" icon="el-icon-star-off" circle></el-button>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-button type="danger" drag-type="button-circle-danger" style="display: inline-block" icon="el-icon-delete" circle></el-button>
+          </div>
+
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>单选框</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="radio" style="display: inline-block">
+              <el-radio v-model="radio" label="1">备选项</el-radio>
+              <el-radio v-model="radio" label="2">备选项</el-radio>
+            </div>
+          </div>
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>多选框</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-checkbox drag-type="checkbox" style="display: inline-block" v-model="checked" >备选项</el-checkbox>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="checkbox-group" style="display: inline-block">
+              <el-checkbox-group v-model="checkList">
+                <el-checkbox label="复选框 A"></el-checkbox>
+                <el-checkbox label="复选框 B"></el-checkbox>
+                <el-checkbox label="复选框 C"></el-checkbox>
+                <el-checkbox label="禁用" disabled></el-checkbox>
+                <el-checkbox label="选中且禁用" disabled></el-checkbox>
+              </el-checkbox-group>
+            </div>
+          </div>
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>下拉框</div>
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>输入框</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-input
+              style="display: inline-block" drag-type="input-attr-search"
+              placeholder="请输入内容"
+              prefix-icon="el-icon-search"
+              v-model="input2">
+            </el-input>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-input
+              style="display: inline-block" drag-type="input-slot-date"
+              placeholder="请选择日期"
+              v-model="input3">
+              <i slot="suffix" class="el-input__icon el-icon-date"></i>
+            </el-input>
+          </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <el-input
+              style="display: inline-block" drag-type="input-slot-search"
+              placeholder="请输入内容"
+              v-model="input4">
+              <i slot="prefix" class="el-input__icon el-icon-search"></i>
+            </el-input>
+          </div>
+
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>表格</div>
+          <div draggable="true" class="drag-item" type="dragRectangle">
+            <el-table
+              drag-type="table-base"
+              :data="tableData"
+              style="width: 100%">
+              <el-table-column
+                prop="date"
+                label="日期"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="name"
+                label="姓名"
+                width="180">
+              </el-table-column>
+              <el-table-column
+                prop="address"
+                label="地址">
+              </el-table-column>
+            </el-table>
+          </div>
+
+        </div>
         <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
 <!--        <div draggable="true" class="drag-item" type="dragRectangle">-->
 <!--          <i class="tag tag-rectangle"></i>-->
@@ -118,8 +259,8 @@
       <el-card id="ele" class=" box-card main_box box">
       </el-card>
     </div>
-    <div style="display: inline-block;width: 19.3%;">
-      <el-card class="box-card main_box">
+    <div style="display: inline-block;width: 14.3%;">
+      <el-card class="box-card main_box clearfix">
         <div class="layui-card">
           <div class="layui-card-body">
             <div class="layui-form-item">
@@ -142,7 +283,7 @@
             </div>
           </div>
         </div>
-        <!--   占位空格     -->
+        <!--   占位空格    -->
         <div class="operate" drag-type="span">
           <div class="layui-card">
             <div class="layui-card-body">
@@ -230,6 +371,9 @@
     name: 'Content4',
     data(){
       return{
+        checkList: ['选中且禁用','复选框 A'],
+        checked: true,
+        radio: '',
         input1: '',
         input2: '',
         input3: '',
@@ -420,6 +564,13 @@
       }
     },
     mounted () {
+      $('.el-card__body').css('padding', '2px');
+      $(document).on('click', '.left-menu-item', function(){
+        $('.left-menu-item').removeClass('left-menu-item-active');
+        $(this).addClass('left-menu-item-active');
+      });
+
+
       let that = this;
       $('#component-modal').children().each(function(i){
         var $div = $('<div draggable="true" class="drag-item" type="dragRectangle">\n' +
@@ -916,6 +1067,52 @@
 </script>
 
 <style scoped>
+  *, ::before, ::after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+  }
+  .demonstration-element-title{
+    border-left: 4px solid #4dba87;
+    border-radius: 2px;
+    padding-left: 5px;
+  }
+  .demonstration-element {
+    font-size: 12px;
+    color: #1f2f3d;
+    padding: 10px 0 10px 5px;
+    vertical-align: middle;
+
+  }
+  .left-menu-item{
+    font-size: 16px;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    padding: 12px 10px;
+    /*border-bottom: 2px solid #fff;*/
+  }
+  .left-menu-item:hover{
+    background-color: #ecf5ff;
+    border-radius: 5px;
+    color: #409eff;
+
+  }
+  .left-menu-item-active{
+    border-right: 3px solid #13ce66;
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  }
+  .leftMenu{
+    float: left;
+    width: 18%;
+    height: 985px;
+    border-right: 1px solid #ccc;
+  }
+  .rightComponent{
+    float: left;
+    width: 81%;
+    height: 985px;
+    padding: 2px;
+  }
   .el-aside {
     background-color: #D3DCE6;
     color: #333;
@@ -947,7 +1144,9 @@
   .main_box{
     height: 985px;
     overflow: auto;
-    padding: 0;
+  }
+  .el-card__body{
+    padding: 5px
   }
   /** {*/
   /*  padding: 0;*/
