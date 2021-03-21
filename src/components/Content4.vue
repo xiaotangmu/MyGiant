@@ -172,7 +172,7 @@
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <el-button type="danger" drag-type="button-circle-danger" style="display: inline-block" icon="el-icon-delete" circle></el-button>
           </div>
-
+<!--        单选框 -->
           <div class="demonstration-element"><span class="demonstration-element-title"></span>单选框</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="radio" style="display: inline-block">
@@ -180,6 +180,7 @@
               <el-radio v-model="radio" label="2">备选项</el-radio>
             </div>
           </div>
+<!--          多选框 -->
           <div class="demonstration-element"><span class="demonstration-element-title"></span>多选框</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <el-checkbox drag-type="checkbox" style="display: inline-block" v-model="checked" >备选项</el-checkbox>
@@ -195,31 +196,234 @@
               </el-checkbox-group>
             </div>
           </div>
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>下拉框</div>
+          <!-- 输入框 -->
           <div class="demonstration-element"><span class="demonstration-element-title"></span>输入框</div>
+          <div class="demonstration-element">可清除，密码框，禁止输入</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <el-input
-              style="display: inline-block" drag-type="input-attr-search"
-              placeholder="请输入内容"
-              prefix-icon="el-icon-search"
-              v-model="input2">
-            </el-input>
+            <div drag-type="input-default" style="display: inline-block">
+              <el-input
+                placeholder="请输入内容"
+                v-model="input1">
+              </el-input>
+            </div>
+          </div>
+          <div class="demonstration-element">带 icon 的输入框 </div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="input-attr-search" style="display: inline-block">
+              <el-input
+                placeholder="请选择日期"
+                suffix-icon="el-icon-search"
+                v-model="input1">
+              </el-input>
+            </div>
           </div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <el-input
-              style="display: inline-block" drag-type="input-slot-date"
-              placeholder="请选择日期"
-              v-model="input3">
-              <i slot="suffix" class="el-input__icon el-icon-date"></i>
-            </el-input>
+            <div drag-type="input-attr-search" style="display: inline-block">
+              <el-input
+                placeholder="请输入内容"
+                prefix-icon="el-icon-date"
+                v-model="input2">
+              </el-input>
+            </div>
           </div>
+          <!-- 计数器 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>输入框</div>
+          <div class="demonstration-element">禁止，最大最小值，步数, 绑定change事件, 精度</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <el-input
-              style="display: inline-block" drag-type="input-slot-search"
-              placeholder="请输入内容"
-              v-model="input4">
-              <i slot="prefix" class="el-input__icon el-icon-search"></i>
-            </el-input>
+            <div drag-type="counter" style="display: inline-block">
+              <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+            </div>
+          </div>
+          <!--          选择框 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>选择框</div>
+          <div class="demonstration-element">单选，多选，禁止选择，可清除，可搜索</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="select" style="display: inline-block">
+              <el-select v-model="selectValue" placeholder="请选择">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+          <!--  级联选择框 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>级联选择框</div>
+          <div class="demonstration-element">单选，多选，禁止选择，可清除，可搜索</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="cascade-select" style="display: inline-block">
+              <el-cascader
+                v-model="value"
+                :options="options2"
+                @change="handleChange"></el-cascader>
+            </div>
+          </div>
+          <!--  时间选择 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>时间选择</div>
+          <div class="demonstration-element">固定时间点</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-time-select
+                v-model="value"
+                :picker-options="{
+    start: '08:30',
+    step: '00:15',
+    end: '18:30'
+  }"
+                placeholder="选择时间">
+              </el-time-select>
+            </div>
+          </div>
+          <div class="demonstration-element">任意时间点, 最大最小</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-all" style="display: inline-block">
+              <el-time-picker
+                v-model="value1"
+                :picker-options="{
+      selectableRange: '18:30:00 - 20:30:00'
+    }"
+                placeholder="任意时间点">
+              </el-time-picker>
+            </div>
+          </div>
+          <div class="demonstration-element">固定时间范围</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-time-select
+                placeholder="起始时间"
+                v-model="startTime"
+                :picker-options="{
+      start: '08:30',
+      step: '00:15',
+      end: '18:30'
+    }">
+              </el-time-select>
+              <el-time-select
+                placeholder="结束时间"
+                v-model="endTime"
+                :picker-options="{
+      start: '08:30',
+      step: '00:15',
+      end: '18:30',
+      minTime: startTime
+    }">
+              </el-time-select>
+            </div>
+          </div>
+          <div class="demonstration-element">任意时间范围</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-time-picker
+                is-range
+                v-model="value1"
+                range-separator="至"
+                start-placeholder="开始时间"
+                end-placeholder="结束时间"
+                placeholder="选择时间范围">
+              </el-time-picker>
+            </div>
+          </div>
+          <!--  日期选择 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>日期选择</div>
+          <div class="demonstration-element">默认</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="date-select-default" style="display: inline-block">
+              <el-date-picker
+                v-model="value1"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="demonstration-element">快捷选择</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-date-picker
+                v-model="value2"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions">
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="demonstration-element">其他日期单位</div>
+          <span class="demonstration">周</span>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-date-picker
+                v-model="value1"
+                type="week"
+                format="yyyy 第 WW 周"
+                placeholder="选择周">
+              </el-date-picker>
+            </div>
+          </div>
+          <span class="demonstration">月</span>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-date-picker
+                v-model="value2"
+                type="month"
+                placeholder="选择月">
+              </el-date-picker>
+            </div>
+          </div>
+          <span class="demonstration">年</span>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="time-select-fixed" style="display: inline-block">
+              <el-date-picker
+                v-model="value"
+                type="year"
+                placeholder="选择年">
+              </el-date-picker>
+            </div>
+          </div>
+          <!--  日期时间选择 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>日期时间选择</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="date-select-default" style="display: inline-block">
+              <el-date-picker
+                v-model="value1"
+                type="datetime"
+                placeholder="选择日期时间">
+              </el-date-picker>
+            </div>
+          </div>
+          <!--  开关 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>开关</div>
+          <div class="demonstration-element">基本用法, 禁止</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="switch" style="display: inline-block">
+              <el-switch
+                v-model="value"
+                active-color="#13ce66"
+                inactive-color="#ff4949">
+              </el-switch>
+            </div>
+          </div>
+          <div class="demonstration-element">文本描述, 颜色</div>
+          <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
+            <div drag-type="switch" style="display: inline-block">
+              <el-switch
+                style="display: block"
+                v-model="value2"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                active-text="按月付费"
+                inactive-text="按年付费">
+              </el-switch>
+            </div>
+          </div>
+          <!--  滑块 -->
+          <div class="demonstration-element"><span class="demonstration-element-title"></span>滑块</div>
+          <div class="demonstration-element">初始值, 禁止, 提示</div>
+          <div draggable="true" class="drag-item" type="dragRectangle">
+            <div drag-type="slide">
+              <el-slider v-model="value2"></el-slider>
+            </div>
           </div>
 
           <div class="demonstration-element"><span class="demonstration-element-title"></span>表格</div>
@@ -246,7 +450,7 @@
           </div>
 
         </div>
-        <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>
+<!--        <div style="padding-left:6px">clone例子,左边往右边拖动试试看</div>-->
 <!--        <div draggable="true" class="drag-item" type="dragRectangle">-->
 <!--          <i class="tag tag-rectangle"></i>-->
 <!--        </div>-->
@@ -371,6 +575,248 @@
     name: 'Content4',
     data(){
       return{
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        startTime: '',
+        endTime: '',
+        options2: [{
+          value: 'zhinan',
+          label: '指南',
+          children: [{
+            value: 'shejiyuanze',
+            label: '设计原则',
+            children: [{
+              value: 'yizhi',
+              label: '一致'
+            }, {
+              value: 'fankui',
+              label: '反馈'
+            }, {
+              value: 'xiaolv',
+              label: '效率'
+            }, {
+              value: 'kekong',
+              label: '可控'
+            }]
+          }, {
+            value: 'daohang',
+            label: '导航',
+            children: [{
+              value: 'cexiangdaohang',
+              label: '侧向导航'
+            }, {
+              value: 'dingbudaohang',
+              label: '顶部导航'
+            }]
+          }]
+        }, {
+          value: 'zujian',
+          label: '组件',
+          children: [{
+            value: 'basic',
+            label: 'Basic',
+            children: [{
+              value: 'layout',
+              label: 'Layout 布局'
+            }, {
+              value: 'color',
+              label: 'Color 色彩'
+            }, {
+              value: 'typography',
+              label: 'Typography 字体'
+            }, {
+              value: 'icon',
+              label: 'Icon 图标'
+            }, {
+              value: 'button',
+              label: 'Button 按钮'
+            }]
+          }, {
+            value: 'form',
+            label: 'Form',
+            children: [{
+              value: 'radio',
+              label: 'Radio 单选框'
+            }, {
+              value: 'checkbox',
+              label: 'Checkbox 多选框'
+            }, {
+              value: 'input',
+              label: 'Input 输入框'
+            }, {
+              value: 'input-number',
+              label: 'InputNumber 计数器'
+            }, {
+              value: 'select',
+              label: 'Select 选择器'
+            }, {
+              value: 'cascader',
+              label: 'Cascader 级联选择器'
+            }, {
+              value: 'switch',
+              label: 'Switch 开关'
+            }, {
+              value: 'slider',
+              label: 'Slider 滑块'
+            }, {
+              value: 'time-picker',
+              label: 'TimePicker 时间选择器'
+            }, {
+              value: 'date-picker',
+              label: 'DatePicker 日期选择器'
+            }, {
+              value: 'datetime-picker',
+              label: 'DateTimePicker 日期时间选择器'
+            }, {
+              value: 'upload',
+              label: 'Upload 上传'
+            }, {
+              value: 'rate',
+              label: 'Rate 评分'
+            }, {
+              value: 'form',
+              label: 'Form 表单'
+            }]
+          }, {
+            value: 'data',
+            label: 'Data',
+            children: [{
+              value: 'table',
+              label: 'Table 表格'
+            }, {
+              value: 'tag',
+              label: 'Tag 标签'
+            }, {
+              value: 'progress',
+              label: 'Progress 进度条'
+            }, {
+              value: 'tree',
+              label: 'Tree 树形控件'
+            }, {
+              value: 'pagination',
+              label: 'Pagination 分页'
+            }, {
+              value: 'badge',
+              label: 'Badge 标记'
+            }]
+          }, {
+            value: 'notice',
+            label: 'Notice',
+            children: [{
+              value: 'alert',
+              label: 'Alert 警告'
+            }, {
+              value: 'loading',
+              label: 'Loading 加载'
+            }, {
+              value: 'message',
+              label: 'Message 消息提示'
+            }, {
+              value: 'message-box',
+              label: 'MessageBox 弹框'
+            }, {
+              value: 'notification',
+              label: 'Notification 通知'
+            }]
+          }, {
+            value: 'navigation',
+            label: 'Navigation',
+            children: [{
+              value: 'menu',
+              label: 'NavMenu 导航菜单'
+            }, {
+              value: 'tabs',
+              label: 'Tabs 标签页'
+            }, {
+              value: 'breadcrumb',
+              label: 'Breadcrumb 面包屑'
+            }, {
+              value: 'dropdown',
+              label: 'Dropdown 下拉菜单'
+            }, {
+              value: 'steps',
+              label: 'Steps 步骤条'
+            }]
+          }, {
+            value: 'others',
+            label: 'Others',
+            children: [{
+              value: 'dialog',
+              label: 'Dialog 对话框'
+            }, {
+              value: 'tooltip',
+              label: 'Tooltip 文字提示'
+            }, {
+              value: 'popover',
+              label: 'Popover 弹出框'
+            }, {
+              value: 'card',
+              label: 'Card 卡片'
+            }, {
+              value: 'carousel',
+              label: 'Carousel 走马灯'
+            }, {
+              value: 'collapse',
+              label: 'Collapse 折叠面板'
+            }]
+          }]
+        }, {
+          value: 'ziyuan',
+          label: '资源',
+          children: [{
+            value: 'axure',
+            label: 'Axure Components'
+          }, {
+            value: 'sketch',
+            label: 'Sketch Templates'
+          }, {
+            value: 'jiaohu',
+            label: '组件交互文档'
+          }]
+        }],
+        num: 1,
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶',
+          disabled: true
+        }, {
+          value: '选项3',
+          label: '蚵仔煎',
+          disabled: false
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        selectValue: '',
         checkList: ['选中且禁用','复选框 A'],
         checked: true,
         radio: '',
@@ -425,6 +871,9 @@
       }
     },
     methods: {
+      handleChange(value) {
+        console.log(value);
+      },
       /*
       * 获取生成代码元素
       * */
@@ -572,11 +1021,11 @@
 
 
       let that = this;
-      $('#component-modal').children().each(function(i){
-        var $div = $('<div draggable="true" class="drag-item" type="dragRectangle">\n' +
-        '        </div>').append($(this)).css('display', $(this).css('display'));
-        $("#box1").append($div);
-      });
+      // $('#component-modal').children().each(function(i){
+      //   var $div = $('<div draggable="true" class="drag-item" type="dragRectangle">\n' +
+      //   '        </div>').append($(this)).css('display', $(this).css('display'));
+      //   $("#box1").append($div);
+      // });
       var cArea = $('#ele');  // 最外层容器
       var drag = $('.drag');  // 拖拽区域
       var cAreaH; //容器高度
@@ -1104,14 +1553,16 @@
   .leftMenu{
     float: left;
     width: 18%;
-    height: 985px;
-    border-right: 1px solid #ccc;
+    height: 980px;
+
   }
   .rightComponent{
     float: left;
     width: 81%;
-    height: 985px;
+    height: 980px;
+    overflow: auto;
     padding: 2px;
+    border-left: 1px solid #ccc;
   }
   .el-aside {
     background-color: #D3DCE6;
