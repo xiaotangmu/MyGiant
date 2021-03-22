@@ -76,19 +76,24 @@
       <el-card class="box-card main_box clearfix" id="box1">
         <div class="leftMenu">
           <ul>
-            <li class="left-menu-item">按钮</li>
-            <li class="left-menu-item">表单</li>
-            <li class="left-menu-item">输入框</li>
-            <li class="left-menu-item">按钮</li>
-            <li class="left-menu-item">表单</li>
-            <li class="left-menu-item">输入框</li>
-            <li class="left-menu-item">按钮</li>
-            <li class="left-menu-item">表单</li>
-            <li class="left-menu-item">输入框</li>
+            <li class="left-menu-item" name="layout">布局</li>
+            <li class="left-menu-item" name="button">按钮</li>
+            <li class="left-menu-item" name="radio">单选框</li>
+            <li class="left-menu-item" name="checkbox">多选框</li>
+            <li class="left-menu-item" name="input">输入框</li>
+            <li class="left-menu-item" name="counter">计数器</li>
+            <li class="left-menu-item" name="select">选择框</li>
+            <li class="left-menu-item" name="cascade-select">级联选择框</li>
+            <li class="left-menu-item" name="time-select">时间选择</li>
+            <li class="left-menu-item" name="date-select">日期选择</li>
+            <li class="left-menu-item" name="datetime-select">日期时间选择</li>
+            <li class="left-menu-item" name="switch">开关</li>
+            <li class="left-menu-item" name="slide">滑块</li>
+            <li class="left-menu-item" name="table">表格</li>
           </ul>
         </div>
         <div class="rightComponent">
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>布局</div>
+          <div class="demonstration-element" name="layout"><span class="demonstration-element-title"></span>布局</div>
           <div draggable="true" class="drag-item" type="dragRectangle">
             <!--  换行    -->
             <div drag-type="div">换行---</div>
@@ -98,7 +103,7 @@
             <div drag-type="span" style="width: 100px;display: inline-block">空格：100px</div>
           </div>
 
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>按钮</div>
+          <div class="demonstration-element" name="button"><span class="demonstration-element-title"></span>按钮</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <!--   button   -->
             <el-button drag-type="button-default" style="display: inline-block">默认按钮</el-button>
@@ -173,7 +178,7 @@
             <el-button type="danger" drag-type="button-circle-danger" style="display: inline-block" icon="el-icon-delete" circle></el-button>
           </div>
 <!--        单选框 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>单选框</div>
+          <div class="demonstration-element" name="radio"><span class="demonstration-element-title"></span>单选框</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="radio" style="display: inline-block">
               <el-radio v-model="radio" label="1">备选项</el-radio>
@@ -181,7 +186,7 @@
             </div>
           </div>
 <!--          多选框 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>多选框</div>
+          <div class="demonstration-element" name="checkbox"><span class="demonstration-element-title"></span>多选框</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <el-checkbox drag-type="checkbox" style="display: inline-block" v-model="checked" >备选项</el-checkbox>
           </div>
@@ -197,7 +202,7 @@
             </div>
           </div>
           <!-- 输入框 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>输入框</div>
+          <div class="demonstration-element" name="input"><span class="demonstration-element-title"></span>输入框</div>
           <div class="demonstration-element">可清除，密码框，禁止输入</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="input-default" style="display: inline-block">
@@ -227,7 +232,7 @@
             </div>
           </div>
           <!-- 计数器 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>输入框</div>
+          <div class="demonstration-element" name="counter"><span class="demonstration-element-title"></span>计数器</div>
           <div class="demonstration-element">禁止，最大最小值，步数, 绑定change事件, 精度</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="counter" style="display: inline-block">
@@ -235,7 +240,7 @@
             </div>
           </div>
           <!--          选择框 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>选择框</div>
+          <div class="demonstration-element" name="select"><span class="demonstration-element-title"></span>选择框</div>
           <div class="demonstration-element">单选，多选，禁止选择，可清除，可搜索</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="select" style="display: inline-block">
@@ -244,13 +249,13 @@
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
-                  :value="item.value">
+                  :value="item.value">npm
                 </el-option>
               </el-select>
             </div>
           </div>
           <!--  级联选择框 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>级联选择框</div>
+          <div class="demonstration-element" name="cascade-select"><span class="demonstration-element-title"></span>级联选择框</div>
           <div class="demonstration-element">单选，多选，禁止选择，可清除，可搜索</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="cascade-select" style="display: inline-block">
@@ -261,7 +266,7 @@
             </div>
           </div>
           <!--  时间选择 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>时间选择</div>
+          <div class="demonstration-element" name="time-select"><span class="demonstration-element-title"></span>时间选择</div>
           <div class="demonstration-element">固定时间点</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="time-select-fixed" style="display: inline-block">
@@ -326,7 +331,7 @@
             </div>
           </div>
           <!--  日期选择 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>日期选择</div>
+          <div class="demonstration-element" name="date-select"><span class="demonstration-element-title"></span>日期选择</div>
           <div class="demonstration-element">默认</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="date-select-default" style="display: inline-block">
@@ -382,7 +387,7 @@
             </div>
           </div>
           <!--  日期时间选择 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>日期时间选择</div>
+          <div class="demonstration-element" name="datetime-select"><span class="demonstration-element-title"></span>日期时间选择</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="date-select-default" style="display: inline-block">
               <el-date-picker
@@ -393,7 +398,7 @@
             </div>
           </div>
           <!--  开关 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>开关</div>
+          <div class="demonstration-element" name="switch"><span class="demonstration-element-title"></span>开关</div>
           <div class="demonstration-element">基本用法, 禁止</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="switch" style="display: inline-block">
@@ -418,7 +423,7 @@
             </div>
           </div>
           <!--  滑块 -->
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>滑块</div>
+          <div class="demonstration-element" name="slide"><span class="demonstration-element-title"></span>滑块</div>
           <div class="demonstration-element">初始值, 禁止, 提示</div>
           <div draggable="true" class="drag-item" type="dragRectangle">
             <div drag-type="slide">
@@ -426,7 +431,7 @@
             </div>
           </div>
 
-          <div class="demonstration-element"><span class="demonstration-element-title"></span>表格</div>
+          <div class="demonstration-element" name="table"><span class="demonstration-element-title"></span>表格</div>
           <div draggable="true" class="drag-item" type="dragRectangle">
             <el-table
               drag-type="table-base"
@@ -1013,6 +1018,16 @@
       }
     },
     mounted () {
+      // 点击跳转到指定位置
+      $(document).on('click', '.left-menu-item', function(){
+        let name = $(this).attr('name');
+        $('.demonstration-element').each(function(i){
+          let name2 = $(this).attr('name');
+          if(name2 !== undefined && name2 === name){
+            $(this).parent().animate({scrollTop: $(this).position().top + $(this).parent().scrollTop()}, 500);
+          }
+        });
+      });
       $('.el-card__body').css('padding', '2px');
       $(document).on('click', '.left-menu-item', function(){
         $('.left-menu-item').removeClass('left-menu-item-active');
@@ -1531,7 +1546,7 @@
     color: #1f2f3d;
     padding: 10px 0 10px 5px;
     vertical-align: middle;
-
+    position: relative;
   }
   .left-menu-item{
     font-size: 16px;
@@ -1563,6 +1578,7 @@
     overflow: auto;
     padding: 2px;
     border-left: 1px solid #ccc;
+    position: relative;
   }
   .el-aside {
     background-color: #D3DCE6;
