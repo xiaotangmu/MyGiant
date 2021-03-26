@@ -216,7 +216,7 @@
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="input-attr-search" style="display: inline-block">
               <el-input
-                placeholder="请选择日期"
+                placeholder="请选择内容"
                 suffix-icon="el-icon-search"
                 v-model="input1">
               </el-input>
@@ -225,7 +225,7 @@
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="input-attr-search" style="display: inline-block">
               <el-input
-                placeholder="请输入内容"
+                placeholder="请输入日期"
                 prefix-icon="el-icon-date"
                 v-model="input2">
               </el-input>
@@ -548,13 +548,11 @@
                 </div>
               </div>
               <div class="layui-form-item">
-                <label class="layui-form-label" style="text-align: left">绑定数据</label>
+                <label class="layui-form-label" style="text-align: left">属性</label>
                 <div class="layui-input-block">
-                  <el-checkbox-group v-model="inputPanelAttr">
-                    <el-checkbox label="show-password">密码框</el-checkbox>
-                    <el-checkbox label="clearable">可清除</el-checkbox>
-                    <el-checkbox label="disabled">禁止输入</el-checkbox>
-                  </el-checkbox-group>
+                  <div><input type="checkbox" name="like[write]" title="写作" class="input-panel-checkbox" classify="password"><span class="checkbox-span">密码框</span></div>
+                  <div><input type="checkbox" name="like[write]" title="写作" class="input-panel-checkbox" classify="clearable"><span class="checkbox-span">可清除</span></div>
+                  <div><input type="checkbox" name="like[write]" title="写作" class="input-panel-checkbox" classify="disabled"><span class="checkbox-span">禁止输入</span></div>
                 </div>
               </div>
             </div>
@@ -584,14 +582,20 @@
             </div>
           </div>
         </div>
-        <!--    single-checkbox    -->
-        <div class="operate" drag-type="single-checkbox">
+        <!--    checkbox    -->
+        <div class="operate" drag-type="checkbox">
           <div class="layui-card">
             <div class="layui-card-body">
               <div class="layui-form-item">
-                <label class="layui-form-label" style="text-align: left">字段</label>
+                <label class="layui-form-label" style="text-align: left">显示字段</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-singleCheckbox" classify="category" >
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-singleCheckbox" classify="display" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">绑定数据</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-singleCheckbox" classify="data" >
                 </div>
               </div>
             </div>
@@ -620,20 +624,86 @@
 <!--                  <el-checkbox label="choose" class="checkbox-group-isCheck" classify="isCheck"></el-checkbox>-->
                   <div><input type="checkbox" name="like[write]" title="写作" class="checkbox-group-disable" classify="disabled"><span class="checkbox-span">禁止输入</span></div>
                   <div><input type="checkbox" name="like[write]" title="写作" class="checkbox-group-isCheck" classify="isCheck"><span class="checkbox-span">是否勾选</span></div>
-
-                  <div class="layui-form-item">
-                    <label class="layui-form-label">复选框</label>
-                    <div class="layui-input-block">
-                      <input type="checkbox" name="like[write]" title="写作">
-                      <input type="checkbox" name="like[read]" title="阅读">
-                      <input type="checkbox" name="like[daze]" title="发呆">
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!--    counter    -->
+        <div class="operate" drag-type="counter">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">显示字段</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="绑定数据" autocomplete="off" class="layui-input drag-type-counter " classify="show">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">显示字段</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="绑定数据" autocomplete="off" class="layui-input drag-type-counter " classify="show">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">初始值</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="初始值 " autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">最小值</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="最小值" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">最大值</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="最大值" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">步数</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="步数" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">精度位数</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="精度位数" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Change事件</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="Change事件" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">按钮位置</label>
+                <div class="layui-input-block">
+                  <el-select v-model="value" placeholder="请选择">
+                    <el-option
+                      v-for="item in counterPanelOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">属性</label>
+                <div class="layui-input-block">
+                  <div><input type="checkbox" name="like[write]" title="写作" class="counter-panel-checkbox" classify="disabled"><span class="checkbox-span">禁止输入</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!--    table    -->
         <div class="operate" drag-type="table">
           <div class="layui-card">
@@ -671,6 +741,16 @@
     name: 'Content4',
     data(){
       return{
+        counterPanelOptions: [{ // 计数器的按钮位置选择数据
+          value: 'default',
+          label: '默认'
+        },{
+          value: 'left',
+          label: '左边'
+        },{
+          value: 'right',
+          label: '右边'
+        }],
         inputPanelAttr: [], //
         pickerOptions: {
           disabledDate(time) {
@@ -1135,10 +1215,9 @@
       //   '        </div>').append($(this)).css('display', $(this).css('display'));
       //   $("#box1").append($div);
       // });
-      var cArea = $('#ele');  // 最外层容器
-//标尺尺寸
+      //标尺尺寸
       var rulerSize = 30;
-//左侧工具栏尺寸
+      //左侧工具栏尺寸
       var leftUtilsSize = $('.leftUtils').innerWidth();
       var currentEle = null; // 缓存当前拖动的元素
       var clickEle = [];  //缓存当前选中元素
@@ -1481,21 +1560,21 @@
           dragTypeTable(index1);
         }else if(type === 'radio'){ // 监控 radio 绑定数据
           dragTypeRadio(index1);
-        }else if(type === 'checkbox-group'){
+        }else if(type === 'checkbox-group'){  // 监控 checkbox-group 多选框组绑定数据
           dragTypeCheckBoxGroup(index1)
+        }else if(type === 'checkbox'){  // 监控 checkbox 多选框绑定数据
+          dragTypeCheckBox(index1);
         }
       });
 
       // 绑定attr 数据
       function bindAttr(index1, name, value){
-        console.log('hello bing attr');
         let index2 = that.codeElementData[index1].attr.findIndex(item => item.name === name);
         if(index2 === -1){
           that.codeElementData[index1].attr.push({ name: name, data: value })
         }else{
           that.codeElementData[index1].attr[index2].data = value;
         }
-        console.log(that.codeElementData[index1]);
       }
       // 绑定 data 数据
       function bindData(index1, name, value){
@@ -1580,25 +1659,36 @@
         console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
-// 监控input绑定数据
+      // 监控input绑定数据
       function dragTypeInput(index1){
         // 改变绑定缓存数据
-        $('.drag-type-checkbox-group').each(function(i){
+        $('.drag-type-input').each(function(i){
           let text = $(this).parent().prev().text();
           let value = $(this).val();
-          if(text === '提示'){  // 表名
+          if(text === '提示'){
             bindAttr(index1, 'placeholder', value)
           }else if(text === '绑定数据'){
             bindAttr(index1, 'v-model', value)
+            bindData(index1, value, '')
           }
         });
-        // 获取选项内容
-        that.codeElementData[index1].attr.push({ name: 'ignore', data: that.inputPanelAttr });
+        // 改变属性
+        $('.input-panel-checkbox').each(function(i){
+          let isChecked = $(this)[0].checked;
+          let classify = $(this).attr('classify');
+          if(classify === 'password'){
+            bindAttr(index1, 'show-password', '')
+          }else if(classify === 'clearable'){
+            bindAttr(index1, 'clearable', '')
+          }else if(classify === 'disabled'){
+            bindAttr(index1, ':disabled', 'true')
+          }
+        });
+        console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
       // 监控 checkbox-group 绑定数据
       function dragTypeCheckBoxGroup(index1){
-        console.log('hello')
         // 改变绑定缓存数据
         let model = '';
         let data = [];
@@ -1606,20 +1696,35 @@
           model = $(this).val();
           let classify = $(this).attr('classify');
           if(classify === 'category'){
-            console.log('v-model')
             bindAttr(index1, 'v-model', model);
           }else if(classify === 'show'){
             let text = $(this).val();
             let value = $(this).next().val();
-            // let disabled = $('.checkbox-group-disable').hasClass('is-checked');
-            // let isChecked = $('.checkbox-group-isCheck').hasClass('is-checked');
-            // data.push({ name: 'disabled', data: disabled });
-            // data.push({ name: 'isChecked', data: isChecked });
-            console.log($('.checkbox-group-disable').prop('outerHTML'))
+            let disabled = $(this).next().next().children()[0].checked;
+            let isChecked = $(this).next().next().next().children()[0].checked;
+            data.push({ name: 'disabled', data: disabled });
+            data.push({ name: 'isChecked', data: isChecked });
             data.push({ name: text, data: value });
           }
         });
         bindData(index1, 'model', data);
+        that.$message.success('保存成功');
+      }
+      // 监控 single-checkbox 绑定数据
+      function dragTypeCheckBox(index1){
+        // 改变绑定缓存数据
+        let model = '';
+        $('.drag-type-singleCheckbox').each(function(i){
+          model = $(this).val();
+          let classify = $(this).attr('classify');
+          if(classify === 'data'){
+            bindAttr(index1, 'v-model', model);
+          }else if(classify === 'display'){
+            let text = $(this).val();
+            bindText(index1, text);
+          }
+        });
+        bindData(index1, model, '' );
         console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
@@ -1662,13 +1767,12 @@
         console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
-// 加载时触发，一次
+      // 加载时触发，一次
       function textareaAuto(e) {
         if($(e).hasClass('dragWords')){
           $(e).css('height', $(e).children('.textarea').height());
         }
       }
-
       // 获取drag div子元素的dragType
       function getDragType($elem){
         let type = $elem.children(0).attr('drag-type');

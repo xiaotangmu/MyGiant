@@ -37,6 +37,11 @@ export default {
     { content1: '<el-button ', content2: 'type="danger" round>', content3: '</el-button>', style: '', type: 'button-round-danger', display: 'inline-block', data: '' },
     // radio
     { content1: '<el-radio ', content2: ' >', content3: '</el-radio>', style: '', type: 'radio', display: 'inline-block', data: '' },
+    // checkbox
+    { content1: '<el-checkbox ', content2: ' >', content3: '</el-checkbox>', style: '', type: 'checkbox', display: 'inline-block', data: '' },
+    // checkbox-group
+    { content1: '<el-checkbox-group ', content2: ' >', content3: '</el-checkbox-group>', style: '', type: 'checkbox-group', display: 'inline-block', data: '' },
+
 
     // input
     { content1: '<el-input ', content2: ' >', content3: '</el-input>', style: '', type: 'input-default', display: 'inline-block', data:
