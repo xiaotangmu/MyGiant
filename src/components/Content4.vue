@@ -239,7 +239,7 @@
               <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
             </div>
           </div>
-          <!--          选择框 -->
+          <!-- 选择框 -->
           <div class="demonstration-element" name="select"><span class="demonstration-element-title"></span>选择框</div>
           <div class="demonstration-element">单选，多选，禁止选择，可清除，可搜索</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
@@ -249,7 +249,7 @@
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
-                  :value="item.value">npm
+                  :value="item.value">
                 </el-option>
               </el-select>
             </div>
@@ -634,51 +634,45 @@
           <div class="layui-card">
             <div class="layui-card-body">
               <div class="layui-form-item">
-                <label class="layui-form-label" style="text-align: left">显示字段</label>
+                <label class="layui-form-label" style="text-align: left">绑定数据</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="绑定数据" autocomplete="off" class="layui-input drag-type-counter " classify="show">
-                </div>
-              </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label" style="text-align: left">显示字段</label>
-                <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="绑定数据" autocomplete="off" class="layui-input drag-type-counter " classify="show">
+                  <input type="text" name="title" placeholder="model " autocomplete="off" class="layui-input drag-type-counter " classify="v-model">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">初始值</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="初始值 " autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                  <input type="text" name="title" placeholder="初始值 " autocomplete="off" class="layui-input drag-type-counter " classify="initial">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">最小值</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="最小值" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                  <input type="text" name="title" placeholder="最小值" autocomplete="off" class="layui-input drag-type-counter " classify=":min">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">最大值</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="最大值" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                  <input type="text" name="title" placeholder="最大值" autocomplete="off" class="layui-input drag-type-counter " classify=":max">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">步数</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="步数" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                  <input type="text" name="title" placeholder="步数" autocomplete="off" class="layui-input drag-type-counter " classify=":step">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">精度位数</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="精度位数" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                  <input type="text" name="title" placeholder="精度位数" autocomplete="off" class="layui-input drag-type-counter " classify=":precision">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">Change事件</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" placeholder="Change事件" autocomplete="off" class="layui-input drag-type-counter " classify="value">
+                  <input type="text" name="title" placeholder="Change事件" autocomplete="off" class="layui-input drag-type-counter " classify="change">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -698,6 +692,40 @@
                 <label class="layui-form-label" style="text-align: left">属性</label>
                 <div class="layui-input-block">
                   <div><input type="checkbox" name="like[write]" title="写作" class="counter-panel-checkbox" classify="disabled"><span class="checkbox-span">禁止输入</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    select    -->
+        <div class="operate" drag-type="select">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-select1" classify="category" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">属性</label>
+                <div class="layui-input-block">
+                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="filterable"><span class="checkbox-span">过滤搜索</span></div>
+                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="clearable"><span class="checkbox-span">清除</span></div>
+                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="disabled"><span class="checkbox-span">禁止选择</span></div>
+                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="multiple"><span class="checkbox-span">多选</span></div>
+                </div>
+              </div>
+              <el-divider content-position="left">选项数据</el-divider>
+              <div class="layui-form-item">
+                <div class="layui-form-label" style="text-align: left">
+                  <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-add"><i class="layui-icon"></i></button>
+                  <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-remove"><i class="layui-icon"></i></button>
+                </div>
+                <div class="layui-input-block">
+                  <input type="text" name="title" placeholder="显示文本" autocomplete="off" class="layui-input drag-type-select2 panelTableInput" classify="show">
+                  <input type="text" name="title" placeholder="绑定值" autocomplete="off" class="layui-input panelTableInput" classify="value">
+                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox2" classify="disabled"><span class="checkbox-span">禁止选择</span></div>
                 </div>
               </div>
             </div>
@@ -1564,6 +1592,10 @@
           dragTypeCheckBoxGroup(index1)
         }else if(type === 'checkbox'){  // 监控 checkbox 多选框绑定数据
           dragTypeCheckBox(index1);
+        }else if(type === 'counter'){  // 监控 counter 计数器
+          dragTypeCounter(index1);
+        }else if(type === 'select'){  // 监控 select 选择器
+          dragTypeSelect(index1);
         }
       });
 
@@ -1725,6 +1757,70 @@
           }
         });
         bindData(index1, model, '' );
+        that.$message.success('保存成功');
+      }
+      // 监控 counter 计数器
+      function dragTypeCounter(index1){
+        // 改变绑定缓存数据
+        let model = '';
+        let data = '';
+        $('.drag-type-counter').each(function(i){
+          let value = $(this).val();
+          if(value.trim() === ''){
+            return true;  // continue;
+          }
+          let classify = $(this).attr('classify');
+          if(classify === 'v-model'){ // model
+            model = value;
+            bindAttr(index1, 'v-model', value);
+          }else if(classify === 'initial'){ // 初始值
+            data = value;
+          }else if(classify === 'change'){ // 最大值
+            bindAttr(index1, '@change', value);
+            bindMethods(index, value, '');
+          }else{ // 最大值
+            bindAttr(index1, classify, value);
+          }
+        });
+        if(model !== ''){
+          bindData(index1, model, data);
+        }
+        let disabled = $('.counter-panel-checkbox')[0].checked;
+        if(disabled){
+          bindAttr(index1, ':disabled', disabled)
+        }
+        if(that.counterPanelOptions !== ''){
+          if(that.counterPanelOptions === 'left')
+            bindAttr(index1, 'controls-position', 'left')
+          else
+            bindAttr(index1, 'controls-position', 'right')
+        }
+        that.$message.success('保存成功');
+      }
+      // 监控 select 选择器
+      function dragTypeSelect(index1){
+        // 绑定属性
+        $('.select-panel-checkbox1').each(function(i){
+          let checked = $(this)[0].checked;
+          let classify = $(this).attr('classify');
+          if(checked){
+            bindAttr(index1, classify, '');
+          }
+        });
+// 改变绑定缓存数据
+        let model = $('.drag-type-select1').val();
+        let data = [];
+        // 绑定选项数据
+        $('.drag-type-select2').each(function(){
+          let value = $(this).val();
+          if(value.trim() !== ''){
+            data.push({ name: value, data: $(this).next().val(), disable: $(this).next().next().children()[0].checked })
+          }
+        })
+        if(model !== ''){
+          bindAttr(index1, 'v-model', model)
+          bindData(index1, model, data);
+        }
         console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
