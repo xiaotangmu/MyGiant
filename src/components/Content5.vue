@@ -1,5 +1,12 @@
 <template>
   <div>
+    <el-checkbox-group v-model="checkList">
+      <el-checkbox label="复选框 A">hello </el-checkbox>
+      <el-checkbox label="复选框 B"></el-checkbox>
+      <el-checkbox label="复选框 C"></el-checkbox>
+      <el-checkbox label="禁用" disabled></el-checkbox>
+      <el-checkbox label="选中且禁用" disabled></el-checkbox>
+    </el-checkbox-group>
     <el-row>
       <el-col :xs="24" :sm="24" :md="4" :lg="4" :xl="3">
         <h1>
@@ -46,6 +53,7 @@
   export default {
     data() {
       return {
+        checkList: ['选中且禁用','复选框 A'],
         menuview: "hidden-sm-and-down",
         iconview: ["el-icon-s-unfold", "hidden-md-and-up"],
         activeIndex: "1",

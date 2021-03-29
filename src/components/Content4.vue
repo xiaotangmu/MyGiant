@@ -403,7 +403,7 @@
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="switch" style="display: inline-block">
               <el-switch
-                v-model="value"
+                v-model="switchValue"
                 active-color="#13ce66"
                 inactive-color="#ff4949">
               </el-switch>
@@ -769,6 +769,10 @@
     name: 'Content4',
     data(){
       return{
+        switchValue: true,
+        elementStr: '', // 记录拼接的元素字符串
+        dataStr: '',  // 记录拼接的data字符串 -- v-model绑定数据
+        methodsStr: '', // 记录methods 绑定字符串数据
         counterPanelOptions: [{ // 计数器的按钮位置选择数据
           value: 'default',
           label: '默认'
@@ -1072,32 +1076,91 @@
           // { id: '', type: '', style: [ { name: '', data: '' }], data: [ { name: '', data: '' } ], attr: [ { name: '', data: '' } ],
           // methods: [ { name: '', data: '' } ], content1: '', content2:'', content3: '', text: '' }
         ], // 保存生成代码元素相关数据
-        methodsCache: '',
       }
     },
     methods: {
       handleChange(value) {
         console.log(value);
       },
+      getElementStr(item){  // 生成页面组件字符串
+        let that = this;
+        let result = '';
+        let style = this.generateStyle(item);
+        let attr = this.generateAttr(item);
+        let text = item.text;
+        let index = this.$store.state.componentElem.findIndex(i => i.type === item.type);
+        let element = this.$store.state.componentElem[index];
+        // table
+        if(item.type.length > 5 && item.type.substr(0, 5) === 'table'){
+          result += '\t' + item.content1 + style + attr +
+            this.generateTableColumn(data, item) + item.content2 + text + item.content3 + '\n';
+        } else if(item.type === 'radio') {  // 单选框
+          let index1 = item.data.findIndex(i => i.name === 'model');
+          if(index1 !== -1){
+            item.data[index1].data.forEach(function(i, index){
+              result += '\t' + element.content1 + style + attr + 'label="' + i.data + '" ' + element.content2 + i.name + element.content3 + '\n';
+            });
+          }
+        } else if(item.type === 'checkbox-group') {  // 复选框组
+          console.log('hello checkbox-group')
+          console.log(item)
+          let index1 = item.data.findIndex(i => i.name === 'model');
+          if(index1 !== -1){
+            result += '\t' + element.content1 + style + attr + 'label="' + i.data + '" ' + element.content2 + i.name + element.content3 + '\n';
+            let index2 = that.$store.state.componentElem.findIndex(i => i.type === 'checkbox');
+            let element2 = that.$store.state.componentElem[index2];
+            item.data[index1].data.forEach(function(i, index){
+              result += '\t\t' + element2.content1 + 'label="' + i.data + '" ' + element2.content2 + i.name + element2.content3 + '\n';
+            });
+          }
+        } else {  // 普通组件
+          result += '\t' + element.content1 + style + attr + element.content2 + text + element.content3 + '\n';
+        }
+        console.log('Hello I\'m elementStr!');
+        console.log(result)
+        return result;
+      },
+
       /*
       * 获取生成代码元素
       * */
       getCodeElement(){
         let that = this;
-        $('.panel-element').each(function(i){
-          let type = $(this).children(0).attr('drag-type');
-          if(type === undefined){ // el-input 这些特殊
-            type = $(this).children(0).children(0).attr('drag-type');
-          }
-          let temp1 = that.$store.state.componentElem.filter(item => item.type === type);
-          let data = temp1[0];
-          let index = that.codeElementData.findIndex(item => item.id === $(this).attr('id'));
-          that.codeElementData[index].content1 = data.content1;
-          that.codeElementData[index].content2 = data.content2;
-          that.codeElementData[index].content3 = data.content3;
-        })
-        console.log(that.codeElementData);
+        that.elementStr = '';
+        that.dataStr = '';
+        that.methodsStr = '';
+        // $('.panel-element').each(function(i){
+        //   let type = $(this).children(0).attr('drag-type');
+        //   if(type === undefined){ // el-input 这些特殊
+        //     type = $(this).children(0).children(0).attr('drag-type');
+        //   }
+          // let temp1 = that.$store.state.componentElem.filter(item => item.type === type);
+          // let data = temp1[0];
+          // let index = that.codeElementData.findIndex(item => item.id === $(this).attr('id'));
+          // that.codeElementData[index].content1 = data.content1;
+          // that.codeElementData[index].content2 = data.content2;
+          // that.codeElementData[index].content3 = data.content3;
+        // })
+        // console.log(that.codeElementData);
         this.generateCode();
+      },
+      generateData(item){ // 生成 Data 字符串
+        let result = '';
+        if(item.type === 'radio'){
+          let index2 = item.attr.findIndex(i => i.name === 'v-model');
+          result = item.attr[index2].data + ': "",\n'
+        }else{
+          // 普通
+          if(item.data !== undefined && item.data !== '' && item.data !== null && item.data.length > 0){
+            item.data.forEach(function(i, index){
+              // 注意值得类型
+              let temp = (typeof i.data === 'string')?('"' + i.data + '"') : i.data;
+              result += i.name + ': ' + temp + ',\n';
+            });
+          }
+        }
+        console.log('Hello I\'m dataStr!');
+        return result;
       },
       generateStyle(item){
         let style = ''; // 记录style 数据
@@ -1115,7 +1178,11 @@
         let attr = ''; // 记录 attr 数据
         if(item.attr !== undefined && item.attr !== '' && item.attr !== null && item.attr.length > 0){
           item.attr.forEach(function(i, index){
-            attr += i.name + '="' + i.data + '" ';
+            if(i.data !== ''){
+              attr += i.name + '="' + i.data + '" ';
+            }else{
+              attr += i.name + ' ';
+            }
           })
         }
         console.log('attr: ' + attr)
@@ -1123,11 +1190,9 @@
       },
       generateMethods(item){
         let methods = ''; // 记录 methods 数据
-        let that = this;
         if(item.methods !== undefined && item.methods !== '' && item.methods !== null && item.methods.length > 0){
           item.methods.forEach(function(i, index){
-            methods += i.name + '="' + i.data + '" ';
-            that.methodsCache = '\n' + i.data + '(){},'
+            methods = '\n' + i.name + '(){},'
           })
         }
         console.log('methods: ' + methods)
@@ -1167,57 +1232,25 @@
       generateCode(){
         let that = this;
         let result = '<template>\n<div>\n';
-        let temData = '';
-        let cacheList = [];
         // 缓存table
-        let temp1 = this.$store.state.componentElem.filter(item => item.type.substr(0, 5) === 'table');
-        let data = temp1[0];
+        // let temp1 = this.$store.state.componentElem.filter(item => item.type.substr(0, 5) === 'table');
+        // let data = temp1[0];
         that.codeElementData.forEach(function(item, index){
-          let style = that.generateStyle(item);
-          let attr = that.generateAttr(item);
+          let elementStr = that.getElementStr(item);
+          that.elementStr += elementStr;
           let methods = that.generateMethods(item);
-          let text = item.text;
-          if(item.type.length > 5 && item.type.substr(0, 5) === 'table'){
-            result += '\t' + item.content1 + style + attr + methods +
-              that.generateTableColumn(data, item) + item.content2 + text + item.content3 + '\n';
-            // data
-            let table = item.data.filter(i => i.name === 'table');
-            console.log(table)
-            if(table.length > 0){
-              let temList = cacheList.filter(i => i.name === table[0].data);
-              if(temList.length === 0){ // 判断是否去重
-                cacheList.push({ name: table[0].data, data: [] });
-                temData += '\n\t\t' + table[0].data + ': [],';
-              }
-            }
-          }else{
-            result += '\t' + item.content1 + style + attr + methods + item.content2 + text + item.content3 + '\n';
-            if(item.type.length > 5 && item.type.substr(0, 5) === 'input'){ // input
-              let index1 = item.attr.findIndex(i => i.name === 'v-model')
-              if(index1 !== -1){
-                temData += '\n\t\t' + item.attr[index1].data + ': "", '
-              }
-            }
-            if(item.data !== '' && item.data !== [] && item.data !== undefined && item.data.length > 0){
-              let temList = cacheList.filter(i => i.name === item.data.name);
-              if(temList.length === 0){ // 判断是否去重
-                cacheList.push(item.data);
-                temData += '\n\t\t' + item.data.name + ': ' + item.data.data + ', ';
-              }
-            }
-          }
+          that.methodsStr += methods;
+          let data = that.generateData(item);
+          that.dataStr += data;
         });
-        result += '</div>\n</template>\n\n<script>\nexport default {' +
+        result += that.elementStr + '</div>\n</template>\n\n<script>\nexport default {' +
           '\n\tprops: [],\n\tcomponents: {},\n\tdata() {\n\t\treturn {';
-        result += temData;
+        result += that.dataStr;
         result += '\n\t}\n},\nmounted() {},\nmethods: {';
-        result += that.methodsCache;
+        result += that.methodsStr;
         result += '\n},\n}\n<\/script>\n\n<style scoped>\n</style>';
         console.log(result)
         return result;
-      },
-      generateRadio(style, attr, methods, text, data){
-
       }
     },
     mounted () {
@@ -1477,7 +1510,7 @@
       }
       // 缓存生成代码数据
       function cachePageData($elem){
-        let data = { id: '', type: [], style: '', data: [], attr: [],
+        let data = { id: '', type: [], style: [], data: [], attr: [],
           methods: [], content1: '' , content2: '', text: '', content3: ''};
         data.id = $elem.attr('id');
         data.type = getDragType($elem);
@@ -1542,6 +1575,36 @@
           $(this).parent().parent().remove();
         }
       });
+      /**
+       * 改变缓存组件排序
+       * @param type 类型有 up, down, delete 分别为前移，后移，删除
+       * @param $choose 选中元素
+       * @param $temp 操作关联元素
+       */
+      function changeCacheSort(type, $choose, $temp){
+        let chooseIndex = that.codeElementData.findIndex(i => i.id === $choose.attr('id'))
+        let targetIndex = ''
+        if($temp !== ''){
+          targetIndex = that.codeElementData.findIndex(i => i.id === $temp.attr('id'))
+        }
+        elementSort(type, chooseIndex, targetIndex);
+      }
+      /**
+       * 改变缓存组件排序
+       * @param type 类型有 up, down, delete 分别为前移，后移，删除
+       * @param chooseIndex 选中元素的原始下标
+       * @param targetIndex 选中元素要变成的目标下标
+       */
+      function elementSort(type, chooseIndex, targetIndex){
+        if(type !== 'delete'){  // 前移
+          let temp = that.codeElementData[targetIndex];
+          let choose = that.codeElementData[chooseIndex];
+          that.codeElementData.splice(targetIndex, 1, choose)
+          that.codeElementData.splice(chooseIndex, 1, temp)
+        }else{
+          that.codeElementData.splice(chooseIndex, 1) // 删除
+        }
+      }
       // 上移
       $(document).on("click",".toUp",function (e) {
         //屏蔽事件冒泡
@@ -1554,6 +1617,8 @@
         if($before.length === 0)
           return false;
         $($before).before($chooseElem)
+        // 改变缓存位置
+        changeCacheSort('up', $chooseElem, $before)
       });
       // 下移
       $(document).on("click",".toDown",function (e) {
@@ -1565,6 +1630,8 @@
         if($after.length === 0)
           return false;
         $($after).after($chooseElem)
+        // 改变缓存位置
+        changeCacheSort('down', $chooseElem, $after)
       });
       // 移除
       $(document).on("click",".toRemove",function (e) {
@@ -1572,6 +1639,8 @@
         e.stopPropagation();
         if($chooseElem === '')
           return false;
+        // 改变缓存位置
+        changeCacheSort('delete', $chooseElem, '')
         $chooseElem.remove()
       });
       // 点击保存操作面板
@@ -1660,11 +1729,13 @@
         $('.drag-type-button').each(function(i){
           // 改变绑定缓存数据
           let text = $(this).parent().prev().text();
+          // console.log('hello I\'m a button')
           let value = $(this).val();
           if(text === 'Text'){  // 按钮文本
             that.codeElementData[index1].text = $(this).val();
           }else if(text === '点击事件'){
-            bindMethods(index1, '@click', value)
+            bindMethods(index1, value, '')
+            bindAttr(index1, '@click', value)
           }
         });
         console.log(that.codeElementData)
