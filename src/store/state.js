@@ -44,8 +44,14 @@ export default {
     // counter
     { content1: '<el-input-number ', content2: ' >', content3: '</el-input-number>', style: '', type: 'counter', display: 'inline-block', data: '' },
     // select
-    { content1: '<el-select placeholder="请选择" ', content2: ' >', content21: ' \n<el-option\n', content22: '  >\n</el-option>\n',
+    { content1: '<el-select placeholder="请选择" ', content2: ' >', content21: ' \n<el-option\n', content22: ' :key="item.value"\n' +
+        '      :label="item.label"\n' +
+        '      :value="item.value"\n' +
+        '      :disabled="item.disabled"  >\n</el-option>\n',
       content3: '</el-select>', style: [ ], type: 'select', display: 'inline-block', data: [] },
+    // cascade-select 级联选择器
+    { content1: '<el-cascader ', content2: ' >',
+      content3: '</el-cascader>', style: [ ], type: 'cascade-select', display: 'inline-block', data: [] },
 
     // input
     { content1: '<el-input ', content2: ' >', content3: '</el-input>', style: '', type: 'input-default', display: 'inline-block', data:

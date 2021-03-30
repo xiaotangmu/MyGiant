@@ -718,6 +718,12 @@
               </div>
               <el-divider content-position="left">选项数据</el-divider>
               <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">选项Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-select-options" classify="category" >
+                </div>
+              </div>
+              <div class="layui-form-item">
                 <div class="layui-form-label" style="text-align: left">
                   <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-add"><i class="layui-icon"></i></button>
                   <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-remove"><i class="layui-icon"></i></button>
@@ -1092,8 +1098,8 @@
         let element = this.$store.state.componentElem[index];
         // table
         if(item.type.length > 5 && item.type.substr(0, 5) === 'table'){
-          result += '\t' + item.content1 + style + attr +
-            this.generateTableColumn(data, item) + item.content2 + text + item.content3 + '\n';
+          result += '\t' + element.content1 + style + attr +
+            this.generateTableColumn(element, item) + element.content2 + text + element.content3 + '\n';
         } else if(item.type === 'radio') {  // 单选框
           let index1 = item.data.findIndex(i => i.name === 'model');
           if(index1 !== -1){
@@ -1102,17 +1108,21 @@
             });
           }
         } else if(item.type === 'checkbox-group') {  // 复选框组
-          console.log('hello checkbox-group')
-          console.log(item)
           let index1 = item.data.findIndex(i => i.name === 'model');
           if(index1 !== -1){
-            result += '\t' + element.content1 + style + attr + 'label="' + i.data + '" ' + element.content2 + i.name + element.content3 + '\n';
+            result += '\t' + element.content1 + style + attr + element.content2 + '\n';
             let index2 = that.$store.state.componentElem.findIndex(i => i.type === 'checkbox');
             let element2 = that.$store.state.componentElem[index2];
             item.data[index1].data.forEach(function(i, index){
-              result += '\t\t' + element2.content1 + 'label="' + i.data + '" ' + element2.content2 + i.name + element2.content3 + '\n';
+              result += '\t\t' + element2.content1 + 'label="' + i.data + '" ' + (i.disabled?'disabled ':'') + element2.content2 + i.name + element2.content3 + '\n';
             });
+            result += element.content3 + '\n';
           }
+        }else if(item.type === 'select') {  // 选择器
+          let index2 = item.data.findIndex(i => i.name === 'options')
+          result += '\t' + element.content1 + style + attr + element.content2 ;
+          result += '\t\t' + element.content21 + 'v-for="item in ' + item.data[index2].data + '"\n ' + element.content22;
+          result += element.content3 + '\n';
         } else {  // 普通组件
           result += '\t' + element.content1 + style + attr + element.content2 + text + element.content3 + '\n';
         }
@@ -1149,6 +1159,36 @@
         if(item.type === 'radio'){
           let index2 = item.attr.findIndex(i => i.name === 'v-model');
           result = item.attr[index2].data + ': "",\n'
+        }else if(item.type.length > 5 && item.type.substr(0, 5) === 'table'){
+          let index2 = item.data.findIndex(i => i.name === 'table');
+          result = item.data[index2].data + ': "",\n'
+        }else if(item.type === 'checkbox-group'){
+          let index2 = item.attr.findIndex(i => i.name === 'v-model');
+          result = item.attr[index2].data + ': [ ';
+          item.data.forEach(function(i2, index){
+            if(i2.name === 'model'){
+              i2.data.forEach(function(i3, index){
+                if(i3.checked){
+                  result += '"' + i3.data + '", ';
+                }
+              });
+            }
+          });
+           result += ' ],\n';
+        }else if(item.type === 'select'){
+          let index2 = item.attr.findIndex(i => i.name === 'v-model');
+          result = item.attr[index2].data + ': "",\n';
+          let temp = '';
+          item.data.forEach(function(i2, index){
+            if(i2.name === 'model'){
+              i2.data.forEach(function(i3, index){
+                temp += '{ label: "' + i3.name + '", value: "' + i3.data + '", disabled: ' + i3.disable + ' },\n'
+              });
+            }else if(i2.name === 'options'){
+              result += i2.data + ': [\n';
+            }
+          });
+          result += temp + '],\n';
         }else{
           // 普通
           if(item.data !== undefined && item.data !== '' && item.data !== null && item.data.length > 0){
@@ -1244,7 +1284,7 @@
           that.dataStr += data;
         });
         result += that.elementStr + '</div>\n</template>\n\n<script>\nexport default {' +
-          '\n\tprops: [],\n\tcomponents: {},\n\tdata() {\n\t\treturn {';
+          '\n\tprops: [],\n\tcomponents: {},\n\tdata() {\n\t\treturn {\n\t\t';
         result += that.dataStr;
         result += '\n\t}\n},\nmounted() {},\nmethods: {';
         result += that.methodsStr;
@@ -1805,9 +1845,9 @@
             let value = $(this).next().val();
             let disabled = $(this).next().next().children()[0].checked;
             let isChecked = $(this).next().next().next().children()[0].checked;
-            data.push({ name: 'disabled', data: disabled });
-            data.push({ name: 'isChecked', data: isChecked });
-            data.push({ name: text, data: value });
+            // data.push({ name: 'disabled', data: disabled });
+            // data.push({ name: 'isChecked', data: isChecked });
+            data.push({ name: text, data: value, disabled: disabled, checked: isChecked });
           }
         });
         bindData(index1, 'model', data);
@@ -1848,7 +1888,7 @@
             data = value;
           }else if(classify === 'change'){ // 最大值
             bindAttr(index1, '@change', value);
-            bindMethods(index, value, '');
+            bindMethods(index1, value, '');
           }else{ // 最大值
             bindAttr(index1, classify, value);
           }
@@ -1870,6 +1910,7 @@
       }
       // 监控 select 选择器
       function dragTypeSelect(index1){
+        console.log('Hello I\'m select!')
         // 绑定属性
         $('.select-panel-checkbox1').each(function(i){
           let checked = $(this)[0].checked;
@@ -1890,7 +1931,8 @@
         })
         if(model !== ''){
           bindAttr(index1, 'v-model', model)
-          bindData(index1, model, data);
+          bindData(index1, 'model', data);
+          bindData(index1, 'options', $('.drag-type-select-options').val())
         }
         console.log(that.codeElementData)
         that.$message.success('保存成功');
