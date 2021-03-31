@@ -55,6 +55,18 @@ export default {
     // time-select-fixed 时间选择器，特定范围，特定相隔时间
     { content1: '<el-time-select ', content2: ' placeholder="选择时间">',
       content3: '</el-time-select>', style: [ ], type: 'time-select-fixed', display: 'inline-block', data: [] },
+    // time-select-fixed-range 时间选择器，特定范围，特定相隔时间
+    { content1: '<el-time-select ', content2: ' placeholder="选择时间">',
+      content3: '</el-time-select>', style: [ ], type: 'time-select-fixed-range', display: 'inline-block', data: [] },
+    // time-select 时间选择器，任意
+    { content1: '<el-time-picker ', content2: ' placeholder="选择时间">',
+      content3: '</el-time-picker>', style: [ ], type: 'time-select', display: 'inline-block', data: [] },
+    // time-select-range 时间选择器，任意
+    { content1: '<el-time-picker is-range range-separator="至"\n' +
+        '    start-placeholder="开始时间"\n' +
+        '    end-placeholder="结束时间"\n' +
+        '    placeholder="选择时间范围" ', content2: ' >',
+      content3: '</el-time-picker>', style: [ ], type: 'time-select-range', display: 'inline-block', data: [] },
 
     // input
     { content1: '<el-input ', content2: ' >', content3: '</el-input>', style: '', type: 'input-default', display: 'inline-block', data:

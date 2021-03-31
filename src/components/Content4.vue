@@ -283,7 +283,7 @@
           </div>
           <div class="demonstration-element">任意时间点, 最大最小</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-all" style="display: inline-block">
+            <div drag-type="time-select" style="display: inline-block">
               <el-time-picker
                 v-model="value1"
                 :picker-options="{
@@ -295,7 +295,7 @@
           </div>
           <div class="demonstration-element">固定时间范围</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-fixed" style="display: inline-block">
+            <div drag-type="time-select-fixed-range" style="display: inline-block">
               <el-time-select
                 placeholder="起始时间"
                 v-model="startTime"
@@ -319,7 +319,7 @@
           </div>
           <div class="demonstration-element">任意时间范围</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-fixed" style="display: inline-block">
+            <div drag-type="time-select-range" style="display: inline-block">
               <el-time-picker
                 is-range
                 v-model="value1"
@@ -790,19 +790,94 @@
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">起始时间</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="08:30" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="start" >
+                  <input type="text" name="title"  lay-verify="required" value="08:30" placeholder="08:30" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="start" >
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">每步时间</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="00:15" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="step" >
+                  <input type="text" name="title"  lay-verify="required" value="00:15" placeholder="00:15" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="step" >
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">最后时间</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="18:30" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="end" >
+                  <input type="text" name="title" lay-verify="required" value="18:30" placeholder="18:30" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="end" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    time-select    -->
+        <div class="operate" drag-type="time-select">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select" classify="model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">起始时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" value="00:00:00" placeholder="00:00:00" autocomplete="off" class="layui-input drag-type-time-select" classify="start" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">最后时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" value="23:59:59" placeholder="23:59:59" autocomplete="off" class="layui-input drag-type-time-select" classify="end" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    time-select-fixed-range    -->
+        <div class="operate" drag-type="time-select-fixed-range">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">StartModel</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-fixed-range" classify="start-model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">EndModel</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-fixed-range" classify="end-model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">起始时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" value="04:30" placeholder="04:30" autocomplete="off" class="layui-input drag-type-time-select-fixed-range" classify="start" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">时间步数</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" value="00:15" placeholder="00:15" autocomplete="off" class="layui-input drag-type-time-select-fixed-range" classify="step" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">最后时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" value="18:30" placeholder="18:30" autocomplete="off" class="layui-input drag-type-time-select-fixed-range" classify="end" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    time-select-range    -->
+        <div class="operate" drag-type="time-select-range">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-range" classify="v-model" >
                 </div>
               </div>
             </div>
@@ -1207,6 +1282,46 @@
           temp += '}" '
           result += '\t' + element.content1 + style + model + temp + element.content2 ;
           result += element.content3 + '\n';
+        }else if(item.type === 'time-select-fixed-range') {  // 定步时间选择器固定范围
+          console.log(that.codeElementData)
+          let temp = ':picker-options="{\n';
+          let startModel = '';
+          let endModel = '';
+          item.attr.forEach(function(i, index){
+            if(i.name === 'start-model'){
+              startModel = i.data;
+            }else if(i.name === 'end-model'){
+              endModel = i.data;
+            }else{
+              temp += i.name + ': \'' + i.data + '\',\n'
+            }
+          });
+          let temp2 = temp;
+          // start
+          temp += '}" '
+          result += '\t' + element.content1 + style + 'v-model="' + startModel + '" ' + temp + element.content2 ;
+          result += element.content3 + '\n';
+          // end
+          temp2 += 'minTime: ' + startModel + '\n}" ';
+          result += '\t' + element.content1 + style + 'v-model="' + endModel + '" ' + temp2 + element.content2 ;
+          result += element.content3 + '\n';
+        }else if(item.type === 'time-select') {  // 任意时间选择器
+          let temp = ':picker-options="{\n\tselectableRange: \'';
+          let start = '';
+          let end = '';
+          let model = '';
+          item.attr.forEach(function(i, index){
+            if(i.name === 'v-model'){
+              model = i.name + '="' + i.data + '" ';
+            }else if(i.name === 'start'){
+              start = i.data;
+            }else if(i.name === 'end'){
+              end = i.data;
+            }
+          });
+          temp += start + ' - ' + end + '\'\n}" '
+          result += '\t' + element.content1 + style + model + temp + element.content2 ;
+          result += element.content3 + '\n';
         } else {  // 普通组件
           result += '\t' + element.content1 + style + attr + element.content2 + text + element.content3 + '\n';
         }
@@ -1283,7 +1398,6 @@
             });
           }
         }
-        console.log('Hello I\'m dataStr!');
         return result;
       },
       generateStyle(item){
@@ -1295,7 +1409,6 @@
           })
           style += '"';
         }
-        console.log('style: ' + style)
         return style;
       },
       generateAttr(item){
@@ -1309,7 +1422,6 @@
             }
           })
         }
-        console.log('attr: ' + attr)
         return attr;
       },
       generateMethods(item){
@@ -1319,14 +1431,10 @@
             methods = '\n' + i.name + '(){},'
           })
         }
-        console.log('methods: ' + methods)
         return methods;
       },
       // :data="tableData"
       generateTableColumn(tableData, item){
-        console.log('tableData')
-        console.log(tableData)
-        console.log(item)
         let index1 = item.data.findIndex(i => i.name === 'table');
         let data = ' :data="' + item.data[index1].data + '">\n ';
         // 拼接column
@@ -1347,7 +1455,6 @@
               'label="' + i2.chinese + '"\n ' + width + tableData.content22;
           })
         }
-        console.log('table: ' + data)
         return data;
       },
       /*
@@ -1791,6 +1898,12 @@
           dragTypeSelect(index1);
         }else if(type === 'time-select-fixed'){  // 监控 select 选择器
           dragTypeTimeSelectFixed(index1);
+        }else if(type === 'time-select-fixed-range'){  // 监控定步时间范围选择器
+          dragTypeTimeSelectFixedRange(index1);
+        }else if(type === 'time-select'){  // 监控 select 选择器
+          dragTypeTimeSelect(index1);
+        }else if(type === 'time-select-range'){  // 监控 select 选择器
+          dragTypeTimeSelectRange(index1);
         }
       });
 
@@ -1834,7 +1947,7 @@
           that.codeElementData[index1].style[index2].data = value;
         }
       }
-      // 时间选择器、
+      // 定步时间选择器、
       function dragTypeTimeSelectFixed(index1){
         $('.drag-type-time-select-fixed').each(function(i){
           let value = $(this).val();
@@ -1844,6 +1957,44 @@
             bindData(index1, value, '')
           }else {
             bindAttr(index1, classify, value);
+          }
+        });
+        that.$message.success('保存成功');
+      }
+      // 定步时间范围选择器
+      function dragTypeTimeSelectFixedRange(index1){
+        $('.drag-type-time-select-fixed-range').each(function(i){
+          let value = $(this).val();
+          let classify = $(this).attr('classify');
+          bindAttr(index1, classify, value);
+          if(classify === 'start-model' || classify === 'end-model'){
+            bindData(index1, value, '')
+          }
+        });
+        that.$message.success('保存成功');
+      }
+      // 任意时间选择器、
+      function dragTypeTimeSelect(index1){
+        $('.drag-type-time-select').each(function(i){
+          let value = $(this).val();
+          let classify = $(this).attr('classify');
+          if(classify === 'model'){
+            bindAttr(index1, 'v-model', value)
+            bindData(index1, value, '')
+          }else {
+            bindAttr(index1, classify, value);
+          }
+        });
+        that.$message.success('保存成功');
+      }
+      // 任意时间范围选择器
+      function dragTypeTimeSelectRange(index1){
+        $('.drag-type-time-select-range').each(function(i){
+          let value = $(this).val();
+          let classify = $(this).attr('classify');
+          if(classify === 'v-model'){
+            bindAttr(index1, 'v-model', value)
+            bindData(index1, value, '')
           }
         });
         that.$message.success('保存成功');
