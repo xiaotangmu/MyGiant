@@ -737,6 +737,77 @@
             </div>
           </div>
         </div>
+        <!--    cascade-select    -->
+<!--        <div class="operate" drag-type="cascade-select">-->
+<!--          <div class="layui-card">-->
+<!--            <div class="layui-card-body">-->
+<!--              <div class="layui-form-item">-->
+<!--                <label class="layui-form-label" style="text-align: left">Model</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-select1" classify="category" >-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="layui-form-item">-->
+<!--                <label class="layui-form-label" style="text-align: left">属性</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="filterable"><span class="checkbox-span">过滤搜索</span></div>-->
+<!--                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="clearable"><span class="checkbox-span">清除</span></div>-->
+<!--                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="disabled"><span class="checkbox-span">禁止选择</span></div>-->
+<!--                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox1" classify="multiple"><span class="checkbox-span">多选</span></div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <el-divider content-position="left">选项数据</el-divider>-->
+<!--              <div class="layui-form-item">-->
+<!--                <label class="layui-form-label" style="text-align: left">选项Model</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-select-options" classify="category" >-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="layui-form-item">-->
+<!--                <div class="layui-form-label" style="text-align: left">-->
+<!--                  <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-add"><i class="layui-icon"></i></button>-->
+<!--                  <button type="button" class="layui-btn layui-btn-primary layui-btn-xs drag-column-remove"><i class="layui-icon"></i></button>-->
+<!--                </div>-->
+<!--                <div class="layui-input-block">-->
+<!--                  <input type="text" name="title" placeholder="显示文本" autocomplete="off" class="layui-input drag-type-select2 panelTableInput" classify="show">-->
+<!--                  <input type="text" name="title" placeholder="绑定值" autocomplete="off" class="layui-input panelTableInput" classify="value">-->
+<!--                  <div><input type="checkbox" name="like[write]" title="写作" class="select-panel-checkbox2" classify="disabled"><span class="checkbox-span">禁止选择</span></div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+        <!--    time-select-fixed    -->
+        <div class="operate" drag-type="time-select-fixed">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">起始时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="08:30" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="start" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">每步时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="00:15" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="step" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">最后时间</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="18:30" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="end" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!--    table    -->
         <div class="operate" drag-type="table">
@@ -1122,6 +1193,19 @@
           let index2 = item.data.findIndex(i => i.name === 'options')
           result += '\t' + element.content1 + style + attr + element.content2 ;
           result += '\t\t' + element.content21 + 'v-for="item in ' + item.data[index2].data + '"\n ' + element.content22;
+          result += element.content3 + '\n';
+        }else if(item.type === 'time-select-fixed') {  // 选择器
+          let temp = ':picker-options="{\n';
+          let model = '';
+          item.attr.forEach(function(i, index){
+            if(i.name === 'v-model'){
+              model = i.name + '="' + i.data + '" ';
+            }else{
+              temp += i.name + ': \'' + i.data + '\',\n'
+            }
+          });
+          temp += '}" '
+          result += '\t' + element.content1 + style + model + temp + element.content2 ;
           result += element.content3 + '\n';
         } else {  // 普通组件
           result += '\t' + element.content1 + style + attr + element.content2 + text + element.content3 + '\n';
@@ -1705,6 +1789,8 @@
           dragTypeCounter(index1);
         }else if(type === 'select'){  // 监控 select 选择器
           dragTypeSelect(index1);
+        }else if(type === 'time-select-fixed'){  // 监控 select 选择器
+          dragTypeTimeSelectFixed(index1);
         }
       });
 
@@ -1747,6 +1833,20 @@
         }else{
           that.codeElementData[index1].style[index2].data = value;
         }
+      }
+      // 时间选择器、
+      function dragTypeTimeSelectFixed(index1){
+        $('.drag-type-time-select-fixed').each(function(i){
+          let value = $(this).val();
+          let classify = $(this).attr('classify');
+          if(classify === 'model'){
+            bindAttr(index1, 'v-model', value)
+            bindData(index1, value, '')
+          }else {
+            bindAttr(index1, classify, value);
+          }
+        });
+        that.$message.success('保存成功');
       }
       // 监控占位空格改变宽度
       function dragTypeSpan(index1){

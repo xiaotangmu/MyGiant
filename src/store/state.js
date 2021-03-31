@@ -52,6 +52,9 @@ export default {
     // cascade-select 级联选择器
     { content1: '<el-cascader ', content2: ' >',
       content3: '</el-cascader>', style: [ ], type: 'cascade-select', display: 'inline-block', data: [] },
+    // time-select-fixed 时间选择器，特定范围，特定相隔时间
+    { content1: '<el-time-select ', content2: ' placeholder="选择时间">',
+      content3: '</el-time-select>', style: [ ], type: 'time-select-fixed', display: 'inline-block', data: [] },
 
     // input
     { content1: '<el-input ', content2: ' >', content3: '</el-input>', style: '', type: 'input-default', display: 'inline-block', data:
