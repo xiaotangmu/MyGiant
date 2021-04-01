@@ -334,7 +334,7 @@
           <div class="demonstration-element" name="date-select"><span class="demonstration-element-title"></span>日期选择</div>
           <div class="demonstration-element">默认</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="date-select-default" style="display: inline-block">
+            <div drag-type="date-select" style="display: inline-block">
               <el-date-picker
                 v-model="value1"
                 type="date"
@@ -344,7 +344,7 @@
           </div>
           <div class="demonstration-element">快捷选择</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-fixed" style="display: inline-block">
+            <div drag-type="date-select-quick" style="display: inline-block">
               <el-date-picker
                 v-model="value2"
                 align="right"
@@ -357,7 +357,7 @@
           <div class="demonstration-element">其他日期单位</div>
           <span class="demonstration">周</span>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-fixed" style="display: inline-block">
+            <div drag-type="date-select-week" style="display: inline-block">
               <el-date-picker
                 v-model="value1"
                 type="week"
@@ -368,7 +368,7 @@
           </div>
           <span class="demonstration">月</span>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-fixed" style="display: inline-block">
+            <div drag-type="date-select-month" style="display: inline-block">
               <el-date-picker
                 v-model="value2"
                 type="month"
@@ -378,7 +378,7 @@
           </div>
           <span class="demonstration">年</span>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="time-select-fixed" style="display: inline-block">
+            <div drag-type="date-select-year" style="display: inline-block">
               <el-date-picker
                 v-model="value"
                 type="year"
@@ -389,7 +389,7 @@
           <!--  日期时间选择 -->
           <div class="demonstration-element" name="datetime-select"><span class="demonstration-element-title"></span>日期时间选择</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="date-select-default" style="display: inline-block">
+            <div drag-type="date-select-dates" style="display: inline-block">
               <el-date-picker
                 v-model="value1"
                 type="datetime"
@@ -411,7 +411,7 @@
           </div>
           <div class="demonstration-element">文本描述, 颜色</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
-            <div drag-type="switch" style="display: inline-block">
+            <div drag-type="text-switch" style="display: inline-block">
               <el-switch
                 style="display: block"
                 v-model="value2"
@@ -426,7 +426,7 @@
           <div class="demonstration-element" name="slide"><span class="demonstration-element-title"></span>滑块</div>
           <div class="demonstration-element">初始值, 禁止, 提示</div>
           <div draggable="true" class="drag-item" type="dragRectangle">
-            <div drag-type="slide">
+            <div drag-type="slider">
               <el-slider v-model="value2"></el-slider>
             </div>
           </div>
@@ -784,7 +784,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">Model</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-fixed" classify="model" >
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input  drag-type-time-select-fixed " classify="v-model" >
                 </div>
               </div>
               <div class="layui-form-item">
@@ -815,7 +815,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">Model</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select" classify="model" >
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select" classify="v-model" >
                 </div>
               </div>
               <div class="layui-form-item">
@@ -877,9 +877,162 @@
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">Model</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-range" classify="v-model" >
+                  <input type="text" name="title" lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-time-select-range" classify="v-model" >
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <!--    date-select   -->
+        <div class="operate" drag-type="date-select">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-date-select" classify="v-model" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    date-select-quick   -->
+        <div class="operate" drag-type="date-select-quick">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-date-select-quick" classify="v-model" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    date-select-month   -->
+        <div class="operate" drag-type="date-select-month">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-date-select-month" classify="v-model" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    date-select-year   -->
+        <div class="operate" drag-type="date-select-year">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-date-select-year" classify="v-model" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--    date-select-week   -->
+        <div class="operate" drag-type="date-select-week">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-date-select-week" classify="v-model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">格式</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="yyyy 第 WW 周" autocomplete="off" value="yyyy 第 WW 周" class="layui-input drag-type-date-select-week" classify="format" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--   switch   -->
+        <div class="operate" drag-type="switch">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-switch" classify="v-model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">开启颜色</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="#13ce66" autocomplete="off" value="#13ce66" class="layui-input drag-type-switch" classify="active-color" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">关闭颜色</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="#ff4949" autocomplete="off" value="#ff4949" class="layui-input drag-type-switch" classify="inactive-color" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--   text-switch   -->
+        <div class="operate" drag-type="text-switch">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-text-switch" classify="v-model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">开启颜色</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="#13ce66" autocomplete="off" value="#13ce66" class="layui-input drag-type-text-switch" classify="active-color" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">关闭颜色</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="#ff4949" autocomplete="off" value="#ff4949" class="layui-input drag-type-text-switch" classify="inactive-color" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">开启文本</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-text-switch" classify="active-text" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">关闭文本</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-text-switch" classify="inactive-text" >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  slider   -->
+        <div class="operate" drag-type="slider">
+          <div class="layui-card">
+            <div class="layui-card-body">
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-slider" classify="v-model" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">初始值</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title"  lay-verify="required" placeholder="0" autocomplete="off" value="0" class="layui-input drag-type-slider" classify="data" >
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -1325,8 +1478,6 @@
         } else {  // 普通组件
           result += '\t' + element.content1 + style + attr + element.content2 + text + element.content3 + '\n';
         }
-        console.log('Hello I\'m elementStr!');
-        console.log(result)
         return result;
       },
 
@@ -1397,6 +1548,13 @@
               result += i.name + ': ' + temp + ',\n';
             });
           }
+          if(item.type === 'date-select-quick'){
+            let index = this.$store.state.componentElem.findIndex(i => i.type === item.type)
+            let element = this.$store.state.componentElem[index];
+            element.data.forEach(function(i, index2){
+              result += i + '\n'
+            })
+          }
         }
         return result;
       },
@@ -1449,7 +1607,7 @@
           columns.forEach(function(i2, index){
             let width = '';
             if(i2.width !== undefined && i2.width !== null && i2.width.trim() !== ''){
-              width = 'width: "' + i2.width + '"\n';
+              width = 'width="' + i2.width + '"\n';
             }
             data += tableData.content21 + ' prop="' + i2.english + '"\n ' +
               'label="' + i2.chinese + '"\n ' + width + tableData.content22;
@@ -1897,13 +2055,29 @@
         }else if(type === 'select'){  // 监控 select 选择器
           dragTypeSelect(index1);
         }else if(type === 'time-select-fixed'){  // 监控 select 选择器
-          dragTypeTimeSelectFixed(index1);
+          dragTypeCommon($('.drag-type-time-select-fixed'), index1);
         }else if(type === 'time-select-fixed-range'){  // 监控定步时间范围选择器
-          dragTypeTimeSelectFixedRange(index1);
+          dragTypeCommon($('.drag-type-time-select-fixed-range'), index1);
         }else if(type === 'time-select'){  // 监控 select 选择器
-          dragTypeTimeSelect(index1);
+          dragTypeCommon($('.drag-type-time-select'), index1);
         }else if(type === 'time-select-range'){  // 监控 select 选择器
-          dragTypeTimeSelectRange(index1);
+          dragTypeCommon($('.drag-type-time-select-range'), index1);
+        }else if(type === 'date-select'){  // 监控 日期选择器
+          dragTypeCommon($('.drag-type-date-select'), index1);
+        }else if(type === 'date-select-quick'){  // 监控 快捷日期选择器
+          dragTypeCommon($('.drag-type-date-select-quick'), index1);
+        }else if(type === 'date-select-week'){  // 监控 周日期选择器
+          dragTypeCommon($('.drag-type-date-select-week'), index1);
+        }else if(type === 'date-select-month'){  // 监控 月日期选择器
+          dragTypeCommon($('.drag-type-date-select-month'), index1);
+        }else if(type === 'date-select-year'){  // 监控 年日期选择器
+          dragTypeCommon($('.drag-type-date-select-year'), index1);
+        }else if(type === 'switch'){  // 开关
+          dragTypeCommon($('.drag-type-switch'), index1);
+        }else if(type === 'text-switch'){  // 开关
+          dragTypeCommon($('.drag-type-text-switch'), index1);
+        }else if(type === 'slider'){  // 开关
+          dragTypeSlider(index1);
         }
       });
 
@@ -1947,54 +2121,31 @@
           that.codeElementData[index1].style[index2].data = value;
         }
       }
-      // 定步时间选择器、
-      function dragTypeTimeSelectFixed(index1){
-        $('.drag-type-time-select-fixed').each(function(i){
+      function dragTypeSlider(index1){
+        let model = '';
+        let data = '';
+        $('.drag-type-slider').each(function (i) {
           let value = $(this).val();
           let classify = $(this).attr('classify');
-          if(classify === 'model'){
+          if (classify === 'v-model') {
+            bindAttr(index1, 'v-model', value)
+            model = value
+          }else if(classify === 'data'){
+            data = value;
+          }
+        });
+        bindData(index1, model, data)
+        that.$message.success('保存成功');
+      }
+      function dragTypeCommon($elem, index1){
+        $elem.each(function (i) {
+          let value = $(this).val();
+          let classify = $(this).attr('classify');
+          if (classify === 'v-model') {
             bindAttr(index1, 'v-model', value)
             bindData(index1, value, '')
           }else {
-            bindAttr(index1, classify, value);
-          }
-        });
-        that.$message.success('保存成功');
-      }
-      // 定步时间范围选择器
-      function dragTypeTimeSelectFixedRange(index1){
-        $('.drag-type-time-select-fixed-range').each(function(i){
-          let value = $(this).val();
-          let classify = $(this).attr('classify');
-          bindAttr(index1, classify, value);
-          if(classify === 'start-model' || classify === 'end-model'){
-            bindData(index1, value, '')
-          }
-        });
-        that.$message.success('保存成功');
-      }
-      // 任意时间选择器、
-      function dragTypeTimeSelect(index1){
-        $('.drag-type-time-select').each(function(i){
-          let value = $(this).val();
-          let classify = $(this).attr('classify');
-          if(classify === 'model'){
-            bindAttr(index1, 'v-model', value)
-            bindData(index1, value, '')
-          }else {
-            bindAttr(index1, classify, value);
-          }
-        });
-        that.$message.success('保存成功');
-      }
-      // 任意时间范围选择器
-      function dragTypeTimeSelectRange(index1){
-        $('.drag-type-time-select-range').each(function(i){
-          let value = $(this).val();
-          let classify = $(this).attr('classify');
-          if(classify === 'v-model'){
-            bindAttr(index1, 'v-model', value)
-            bindData(index1, value, '')
+            bindAttr(index1, classify, value)
           }
         });
         that.$message.success('保存成功');
@@ -2041,7 +2192,6 @@
           model = $(this).val();
           let classify = $(this).attr('classify');
           if(classify === 'category'){
-            console.log('v-model')
             bindAttr(index1, 'v-model', model);
           }else if(classify === 'show'){
             let text = $(this).val();
@@ -2050,7 +2200,6 @@
           }
         });
         bindData(index1, 'model', data);
-        console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
       // 监控input绑定数据
@@ -2078,7 +2227,6 @@
             bindAttr(index1, ':disabled', 'true')
           }
         });
-        console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
       // 监控 checkbox-group 绑定数据
@@ -2161,7 +2309,6 @@
       }
       // 监控 select 选择器
       function dragTypeSelect(index1){
-        console.log('Hello I\'m select!')
         // 绑定属性
         $('.select-panel-checkbox1').each(function(i){
           let checked = $(this)[0].checked;
@@ -2185,7 +2332,6 @@
           bindData(index1, 'model', data);
           bindData(index1, 'options', $('.drag-type-select-options').val())
         }
-        console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
       // 监控 table 绑定数据

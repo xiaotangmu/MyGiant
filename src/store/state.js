@@ -67,7 +67,68 @@ export default {
         '    end-placeholder="结束时间"\n' +
         '    placeholder="选择时间范围" ', content2: ' >',
       content3: '</el-time-picker>', style: [ ], type: 'time-select-range', display: 'inline-block', data: [] },
-
+    // data-select 日期选择器
+    { content1: '<el-date-picker ' +
+        'type="date" ' +
+        'placeholder="选择日期" ', content2: ' >',
+      content3: '</el-date-picker>', style: [ ], type: 'date-select', display: 'inline-block', data: [] },
+    // data-select-week 周日期选择器
+    { content1: '<el-date-picker ' +
+        'type="week" ' +
+        'placeholder="选择日期" ', content2: ' >',
+      content3: '</el-date-picker>', style: [ ], type: 'date-select-week', display: 'inline-block', data: [] },
+    // data-select-month 月日期选择器
+    { content1: '<el-date-picker ' +
+        'type="month" ' +
+        'placeholder="选择日期" ', content2: ' >',
+      content3: '</el-date-picker>', style: [ ], type: 'date-select-month', display: 'inline-block', data: [] },
+    // data-select-year 年日期选择器
+    { content1: '<el-date-picker ' +
+        'type="year" ' +
+        'placeholder="选择日期" ', content2: ' >',
+      content3: '</el-date-picker>', style: [ ], type: 'date-select-year', display: 'inline-block', data: [] },
+    // data-select-dates 多个日期选择器
+    { content1: '<el-date-picker ' +
+        'type="dates" ' +
+        'placeholder="选择一个或多个日期" ', content2: ' >',
+      content3: '</el-date-picker>', style: [ ], type: 'date-select-year', display: 'inline-block', data: [] },
+    // data-select-quick 快捷日期选择器
+    { content1: '<el-date-picker ' +
+        'align="right"\n' +
+        '      type="date"\n' +
+        '      placeholder="选择日期"\n' +
+        '      :picker-options="pickerOptions" ', content2: ' >',
+      content3: '</el-date-picker>', style: [ ], type: 'date-select-quick', display: 'inline-block', data: ['pickerOptions: {\n' +
+      '          disabledDate(time) {\n' +
+      '            return time.getTime() > Date.now();\n' +
+      '          },\n' +
+      '          shortcuts: [{\n' +
+      '            text: \'今天\',\n' +
+      '            onClick(picker) {\n' +
+      '              picker.$emit(\'pick\', new Date());\n' +
+      '            }\n' +
+      '          }, {\n' +
+      '            text: \'昨天\',\n' +
+      '            onClick(picker) {\n' +
+      '              const date = new Date();\n' +
+      '              date.setTime(date.getTime() - 3600 * 1000 * 24);\n' +
+      '              picker.$emit(\'pick\', date);\n' +
+      '            }\n' +
+      '          }, {\n' +
+      '            text: \'一周前\',\n' +
+      '            onClick(picker) {\n' +
+      '              const date = new Date();\n' +
+      '              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);\n' +
+      '              picker.$emit(\'pick\', date);\n' +
+      '            }\n' +
+      '          }]\n' +
+      '        },'] },
+    // switch
+    { content1: '<el-switch ', content2: ' >', content3: '</el-switch>', style: '', type: 'switch', display: 'inline-block', data: [] },
+    // text-switch
+    { content1: '<el-switch ', content2: ' >', content3: '</el-switch>', style: '', type: 'text-switch', display: 'inline-block', data: [] },
+    // slider
+    { content1: '<el-slider ', content2: ' >', content3: '</el-slider>', style: '', type: 'slider', display: '', data: [] },
     // input
     { content1: '<el-input ', content2: ' >', content3: '</el-input>', style: '', type: 'input-default', display: 'inline-block', data:
       {
