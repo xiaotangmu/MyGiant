@@ -9,6 +9,9 @@ import $ from 'jquery'
 import 'bootstrap'
 import UUID from "vue-uuid";
 import store from './store';
+import axios from 'axios';
+
+Vue.prototype.$http = axios
 Vue.use(UUID);
 Vue.config.productionTip = false
 

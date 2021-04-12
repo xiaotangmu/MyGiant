@@ -236,7 +236,7 @@
           <div class="demonstration-element">禁止，最大最小值，步数, 绑定change事件, 精度</div>
           <div draggable="true" class="drag-item" type="dragRectangle" style="display: inline-block">
             <div drag-type="counter" style="display: inline-block">
-              <el-input-number v-model="num" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+              <el-input-number v-model="num"  :min="1" :max="10" label="描述文字"></el-input-number>
             </div>
           </div>
           <!-- 选择框 -->
@@ -262,7 +262,7 @@
               <el-cascader
                 v-model="value"
                 :options="options2"
-                @change="handleChange"></el-cascader>
+                ></el-cascader>
             </div>
           </div>
           <!--  时间选择 -->
@@ -519,13 +519,39 @@
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">Text</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" class="layui-input drag-type-button" >
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" classify="text" class="layui-input drag-type-button" >
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label" style="text-align: left">点击事件</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" required  lay-verify="required" placeholder="事件名" autocomplete="off" class="layui-input drag-type-button">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="事件名" autocomplete="off" classify="event" class="layui-input drag-type-button">
+                </div>
+              </div>
+              <el-divider content-position="left">后台数据</el-divider>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">操作类型</label>
+                <div class="layui-input-block">
+                  <el-select v-model="operateType" placeholder="请选择">
+                    <el-option
+                      v-for="item in buttonPanelOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">作用Table</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" classify="table" class="layui-input drag-type-button" >
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label" style="text-align: left">参数Model</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" required  lay-verify="required" placeholder="请输入内容" autocomplete="off" classify="param" class="layui-input drag-type-button" >
                 </div>
               </div>
             </div>
@@ -1078,6 +1104,20 @@
         elementStr: '', // 记录拼接的元素字符串
         dataStr: '',  // 记录拼接的data字符串 -- v-model绑定数据
         methodsStr: '', // 记录methods 绑定字符串数据
+        operateType: '',  // 记录button 绑定后台操作类型
+        buttonPanelOptions: [{ // 后台操作类型
+          value: 'add',
+          label: '添加'
+        },{
+          value: 'edit',
+          label: '编辑'
+        },{
+          value: 'delete',
+          label: '删除'
+        },{
+          value: 'query',
+          label: '查询'
+        }],
         counterPanelOptions: [{ // 计数器的按钮位置选择数据
           value: 'default',
           label: '默认'
@@ -1379,14 +1419,17 @@
         codeElementData: [
           // 内部数据格式
           // { id: '', type: '', style: [ { name: '', data: '' }], data: [ { name: '', data: '' } ], attr: [ { name: '', data: '' } ],
-          // methods: [ { name: '', data: '' } ], content1: '', content2:'', content3: '', text: '' }
+          // methods: [ { name: '', data: '' } ], content1: '', content2:'', content3: '', text: '', backData: [] }
         ], // 保存生成代码元素相关数据
+        // 传递给后台的数据
+        generator: {
+          table: '', // 列名数组字符串
+          fun: '', // controller 绑定方法字符串
+          pageCodeStr: '', // 页面生成代码字符串
+        }
       }
     },
     methods: {
-      handleChange(value) {
-        console.log(value);
-      },
       getElementStr(item){  // 生成页面组件字符串
         let that = this;
         let result = '';
@@ -1436,7 +1479,6 @@
           result += '\t' + element.content1 + style + model + temp + element.content2 ;
           result += element.content3 + '\n';
         }else if(item.type === 'time-select-fixed-range') {  // 定步时间选择器固定范围
-          console.log(that.codeElementData)
           let temp = ':picker-options="{\n';
           let startModel = '';
           let endModel = '';
@@ -1489,20 +1531,17 @@
         that.elementStr = '';
         that.dataStr = '';
         that.methodsStr = '';
-        // $('.panel-element').each(function(i){
-        //   let type = $(this).children(0).attr('drag-type');
-        //   if(type === undefined){ // el-input 这些特殊
-        //     type = $(this).children(0).children(0).attr('drag-type');
-        //   }
-          // let temp1 = that.$store.state.componentElem.filter(item => item.type === type);
-          // let data = temp1[0];
-          // let index = that.codeElementData.findIndex(item => item.id === $(this).attr('id'));
-          // that.codeElementData[index].content1 = data.content1;
-          // that.codeElementData[index].content2 = data.content2;
-          // that.codeElementData[index].content3 = data.content3;
-        // })
-        // console.log(that.codeElementData);
-        this.generateCode();
+        that.generator = { table: '', fun: '', pageCodeStr: '' };
+        this.generator.pageCodeStr = this.generateCode();
+        this.generator.fun = '[' + this.generator.fun + ']';
+        this.generator.table = '[' + this.generator.table + ']';
+        this.$http.post('api/user/login', this.generator)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       },
       generateData(item){ // 生成 Data 字符串
         let result = '';
@@ -1631,6 +1670,8 @@
           that.methodsStr += methods;
           let data = that.generateData(item);
           that.dataStr += data;
+          that.getGeneratorTable(item); // 封装后台数据
+          that.getGeneratorFunction(item); // 封装后台 Controller 数据
         });
         result += that.elementStr + '</div>\n</template>\n\n<script>\nexport default {' +
           '\n\tprops: [],\n\tcomponents: {},\n\tdata() {\n\t\treturn {\n\t\t';
@@ -1640,7 +1681,49 @@
         result += '\n},\n}\n<\/script>\n\n<style scoped>\n</style>';
         console.log(result)
         return result;
-      }
+      },
+      getGeneratorTable(item){
+        if(item.type.length >= 5 && item.type.substr(0, 5) === 'table'){
+          let table = { name: '', column: [] };
+          let index = item.data.findIndex(i => i.name === 'table')
+          if(index === -1 || item.backData[index] === '')
+            return;
+          item.data.forEach(function(i, index){
+            if(i.name === 'table'){
+              table.name = i.data
+            }else if(i.name === 'column'){
+              table.column = { chinese: i.data.chinese, english: i.data.english }
+            }
+          })
+          if(this.generator.table === ''){
+            this.generator.table += JSON.stringify(table)
+          }else{
+            this.generator.table += ',' + JSON.stringify(table)
+          }
+        }
+      },
+      getGeneratorFunction(item){
+        if(item.type.length >= 6 && item.type.substr(0, 6) === 'button'){
+          let fun = { table: '', operateType: '', param: '' };
+          let index = item.backData.findIndex(i => i.name === 'table')
+          if(index === -1 || item.backData[index] === '')
+            return;
+          item.backData.forEach(function(i, index){
+            if(i.name === 'table'){
+              fun.table = i.data
+            }else if(i.name === 'operateType'){
+              fun.operateType = i.data
+            }else{
+              fun.param = i.data
+            }
+          })
+          if(this.generator.fun === ''){
+            this.generator.fun += JSON.stringify(fun)
+          }else{
+            this.generator.fun += ',' + JSON.stringify(fun)
+          }
+        }
+      },
     },
     mounted () {
       // 点击跳转到指定位置
@@ -1900,7 +1983,7 @@
       // 缓存生成代码数据
       function cachePageData($elem){
         let data = { id: '', type: [], style: [], data: [], attr: [],
-          methods: [], content1: '' , content2: '', text: '', content3: ''};
+          methods: [], content1: '' , content2: '', text: '', content3: '', backData: []};
         data.id = $elem.attr('id');
         data.type = getDragType($elem);
         let tempList = that.$store.state.componentElem.filter(item => item.type === data.type)
@@ -2108,6 +2191,15 @@
           that.codeElementData[index1].methods[index2].data = value;
         }
       }
+      // 绑定 backData 后台数据
+      function bindBackData(index1, name, value){
+        let index2 = that.codeElementData[index1].methods.findIndex(item => item.name === name);
+        if(index2 === -1){
+          that.codeElementData[index1].backData.push({ name: name, data: value })
+        }else{
+          that.codeElementData[index1].backData[index2].data = value;
+        }
+      }
       // 绑定 text 数据
       function bindText(index1, value){
         that.codeElementData[index1].text = value;
@@ -2170,16 +2262,23 @@
       function dragTypeButton(index1){
         $('.drag-type-button').each(function(i){
           // 改变绑定缓存数据
-          let text = $(this).parent().prev().text();
+          let text = $(this).attr('classify');
           // console.log('hello I\'m a button')
           let value = $(this).val();
-          if(text === 'Text'){  // 按钮文本
+          if(text === 'text'){  // 按钮文本
             that.codeElementData[index1].text = $(this).val();
-          }else if(text === '点击事件'){
+          }else if(text === 'event'){
             bindMethods(index1, value, '')
             bindAttr(index1, '@click', value)
+          }else{
+            if(value !== ''){
+              bindBackData(index1, text, value)
+            }
           }
         });
+        if(that.operateType !== ''){
+          bindBackData(index1, 'operateType', that.operateType)
+        }
         console.log(that.codeElementData)
         that.$message.success('保存成功');
       }
