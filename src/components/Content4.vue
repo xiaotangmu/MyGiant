@@ -1535,7 +1535,7 @@
         this.generator.pageCodeStr = this.generateCode();
         this.generator.fun = '[' + this.generator.fun + ']';
         this.generator.table = '[' + this.generator.table + ']';
-        this.$http.post('api/user/login', this.generator)
+        this.$http.post('api/Generator/Generate', this.generator)
           .then(function (response) {
             console.log(response);
           })
@@ -1679,12 +1679,11 @@
         result += '\n\t}\n},\nmounted() {},\nmethods: {';
         result += that.methodsStr;
         result += '\n},\n}\n<\/script>\n\n<style scoped>\n</style>';
-        console.log(result)
         return result;
       },
       getGeneratorTable(item){
         if(item.type.length >= 5 && item.type.substr(0, 5) === 'table'){
-          let table = { name: '', column: [] };
+          let table = { name: '', columns: [] };
           let index = item.data.findIndex(i => i.name === 'table')
           if(index === -1 || item.backData[index] === '')
             return;
@@ -1692,7 +1691,9 @@
             if(i.name === 'table'){
               table.name = i.data
             }else if(i.name === 'column'){
-              table.column = { chinese: i.data.chinese, english: i.data.english }
+              i.data.forEach(function(i2, index2){
+                table.columns.push({ chinese: i2.chinese, english: i2.english })
+              })
             }
           })
           if(this.generator.table === ''){

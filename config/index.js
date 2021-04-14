@@ -12,12 +12,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:5001/',
+        target: 'http://localhost:8788/api/v0.1/',
         changeOrigin: true,
         pathRewrite: {'^/api': ''},
         headers: {			// 别忘了配置这个 不然请求头设置传不过去，还会发送两次请求
-          Referer: 'https://localhost:5001/api/'
+          Referer: 'https://localhost:8789/api/v0.1/'
         }
+      }
     },
 
     // Various Dev Server settings
